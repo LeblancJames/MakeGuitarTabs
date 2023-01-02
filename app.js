@@ -9,6 +9,8 @@ app.engine('ejs', engine);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+//set path for obtaining files
+app.use(express.static(path.join(__dirname, '/public/'))),
 
 app.get('/', (req, res) => {
     res.render('home');
