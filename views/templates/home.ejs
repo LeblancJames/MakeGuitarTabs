@@ -1,0 +1,52 @@
+<% layout('./layouts/boilerplate') -%>
+
+<div class = 'container mw-100 mx-0'>
+    <div class="row">
+        <div class="col-9">
+            <div class="navbar my-2 mx-3">
+                <div class ="d-inline">
+                    <a href="#" class="btn btn-white btn-outline-dark ">Clear Board</a>
+                    <a href="#" class="btn btn-white btn-outline-dark mx-1">Remove Previous </a>
+                    <a href="#" class="btn btn-white btn-outline-dark mx-1">New Row</a>  
+                </div>
+                <div class = "d-inline">
+                    <a href="#" class="btn btn-white btn-outline-dark mx-1">Export </a>
+                    <a href="#" class="btn btn-white btn-outline-dark">Save Tab</a>
+                </div>
+            </div>
+            <div class="container">
+                <div>
+                    <%- include ('../partials/fretboard') %> 
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="border-start border-3 border-dark">
+                <div class="d-flex justify-content-center">
+                    <h1>How to Use:</h1>
+                </div>
+                <div class="d-flex justify-content-center mx-3">
+                    <p>You can either click on the notes directly on the fretboard,
+                        or click on the tab and type in a number using your keyboard.
+                        In order to use special keys, you need to click on the tab and
+                        then type the corresponding characters that are listed below. 
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <h4>Special Characters:</h4>
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <h6> / - Slide</h6>
+                    <h6> H - Hammer</h6>
+                    <h6> P - Pull off</h6>
+                    <h6> B - Bend</h6>
+                    <h6> R - Release</h6>
+                    <h6> Space - Skip Note</h6>
+                    <h6> Backspace - Delete Previous Note</h6>
+                    <h6> Enter - Create New Row</h6>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
+
