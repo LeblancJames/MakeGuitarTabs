@@ -4,10 +4,11 @@
     <% for(let i = 0; i < numberOfStrings; i++) {%>
         <div class="string">
         <!--create frets based on variable per string-->
-        <% for(let fret = 0; fret <= numberOfFrets; fret ++){ %>
-            <div class="noteFret"></div> 
-            <% if(i === 0 && (singleFretMarkPositions.indexOf(fret + 1) !== -1)) {%>
-                <div class="singleFretmark"></div>
+        <% for(let fret = 0; fret <= numberOfFrets; fret++){ %>
+            <%if(i === 0 && singleFretMarkPositions.indexOf(fret) !== -1){ %>
+                <div class = "noteFret singleFretMark"></div>
+            <%}else {%>
+                <div class = "noteFret"></div>
             <%}%>
         <%}%>
         </div>

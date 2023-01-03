@@ -68,7 +68,7 @@
     opacity: 0.1;
 }
 
-.singleFretmark:after{
+.singleFretMark:after{
     content: '';
     position: absolute;
     height: 30px;
