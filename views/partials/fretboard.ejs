@@ -7,6 +7,8 @@
         <% for(let fret = 0; fret <= numberOfFrets; fret++){ %>
             <%if(i === 0 && singleFretMarkPositions.indexOf(fret) !== -1){ %>
                 <div class = "noteFret singleFretMark"></div>
+            <%}else if (i === 0 && doubleFretMarkPositions.indexOf(fret) !== -1) {%>
+                <div class = "noteFret"><div class = "doubleFretMark"></div></div>
             <%}else {%>
                 <div class = "noteFret"></div>
             <%}%>
