@@ -23,7 +23,14 @@ app.get('/', (req, res) => {
     //create fretboard according to number of strings and number of frets
     let numberOfStrings = fretboard.numberOfStrings;
     let numberOfFrets = fretboard.numberOfFrets;
-    res.render('./templates/home' , {numberOfStrings, numberOfFrets});
+    let singleFretMarkPositions = fretboard.singleFretMarkPositions;
+    let doubleFretMarkPositions = fretboard.doubleFretMarkPositions;
+    res.render('./templates/home' , {
+        numberOfStrings, 
+        numberOfFrets, 
+        singleFretMarkPositions, 
+        doubleFretMarkPositions,
+    });
 })
 
 app.listen(port, () => {

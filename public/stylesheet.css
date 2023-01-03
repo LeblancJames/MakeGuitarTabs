@@ -48,7 +48,7 @@
 
 .noteFret:first-child{
     background: #161717;
-    min-width: 76px;
+    min-width: 55px;
     border-right: 12px solid;
     flex-grow: 0;
     flex-shrink: 0;
