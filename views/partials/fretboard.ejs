@@ -1,95 +1,12 @@
 <link rel="stylesheet" href="/stylesheet.css">
-<div class = 'fretboard'>
-    <div class = 'string'>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret singleFretmark"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret singleFretmark"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret singleFretmark"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret singleFretmark"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret">
-            <div class="doubleFret"></div>
+<div class = "fretboard">
+    <!--create strings based on variable-->
+    <% for(let i = 0; i < numberOfStrings; i++) {%>
+        <div class="string">
+        <!--create frets based on variable per string-->
+        <% for(let fret = 0; fret <= numberOfFrets; fret ++){ %>
+            <div class="noteFret"></div>
+        <%}%>
         </div>
-    </div>
-    <div class = 'string'>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-    </div>
-    <div class = 'string'>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-    </div>
-    <div class = 'string'>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-    </div>
-    <div class = 'string'>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-    </div>
-    <div class = 'string'>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-        <div class="noteFret"></div>
-    </div>
-</div> 
+    <%}%>        
+</div>
