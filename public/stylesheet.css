@@ -36,7 +36,7 @@
     top: calc(var(--string-top-position) * 1px);
 }
 
-.noteFret {
+.note-fret {
     display: flex;
     flex: 1;
     border-right: 0.5em solid;
@@ -46,7 +46,7 @@
     position: relative;
 }
 
-.noteFret:first-child{
+.note-fret:first-child{
     background: #161717;
     min-width: 55px;
     border-right: 12px solid;
@@ -55,7 +55,7 @@
     border-image: linear-gradient(to left, #bbb, #fff, #bbb) 1 100%;
 }
 
-.noteFret:before{
+.note-fret:before{
     content: attr(data-note);
     width: 33px;
     height: 33px;
@@ -65,10 +65,10 @@
     background-color: teal;
     z-index: 2;
     color: #eee;
-    opacity: 0;
+    opacity: 0.1;
 }
 
-.singleFretMark:after{
+.single-fretmark:after{
     content: '';
     position: absolute;
     height: 30px;
@@ -79,7 +79,7 @@
     transform: translate(0, -50%);
 }
 
-.doubleFretMark:before{
+.double-fretmark:before{
     content: '';
     position: absolute;
     width: 30px;
@@ -90,7 +90,7 @@
     transform: translate(-110%, -50%);
 }
 
-.doubleFretMark:after{
+.double-fretmark:after{
     content: '';
     position: absolute;
     width: 30px;
