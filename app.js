@@ -4,9 +4,15 @@ const app = express();
 const port = 3000;
 const path = require('path');
 
-//access variables from models
+//access variables from controller and models
 const {fretboard} = require('./models/fretboard');
+let numberOfStrings = fretboard.numberOfStrings;
+let numberOfFrets = fretboard.numberOfFrets;
+let singleFretMarkPositions = fretboard.singleFretMarkPositions;
+let doubleFretMarkPositions = fretboard.doubleFretMarkPositions;
+let guitarTuning = fretboard.guitarTuning;
 
+const {accidentals, generateNoteNames} = require('./controllers/fretboard');
 //set up templating engines using ejs-mate and ejs
 app.engine('ejs', engine);
 app.set('views', path.join(__dirname, 'views'));
@@ -17,19 +23,16 @@ app.use(express.static(path.join(__dirname, '/public/'))),
 
 
 
-
-
 app.get('/', (req, res) => {
     //create fretboard according to number of strings and number of frets
-    let numberOfStrings = fretboard.numberOfStrings;
-    let numberOfFrets = fretboard.numberOfFrets;
-    let singleFretMarkPositions = fretboard.singleFretMarkPositions;
-    let doubleFretMarkPositions = fretboard.doubleFretMarkPositions;
     res.render('./templates/home' , {
         numberOfStrings, 
         numberOfFrets, 
         singleFretMarkPositions, 
         doubleFretMarkPositions,
+        guitarTuning,
+        accidentals,
+        generateNoteNames,
     });
 })
 
