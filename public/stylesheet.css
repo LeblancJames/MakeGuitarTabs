@@ -56,7 +56,7 @@
 }
 
 .noteFret:before{
-    content: 'C';
+    content: attr(data-note);
     width: 33px;
     height: 33px;
     border-radius: 50%;
@@ -65,7 +65,7 @@
     background-color: teal;
     z-index: 2;
     color: #eee;
-    opacity: 0.1;
+    opacity: 0;
 }
 
 .singleFretMark:after{

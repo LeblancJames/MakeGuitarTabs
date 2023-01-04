@@ -7,12 +7,11 @@
         <% for(let fret = 0; fret <= numberOfFrets; fret++){ %>
             <%let noteName = generateNoteNames((fret + guitarTuning[i]), accidentals);%>
             <%if(i === 0 && singleFretMarkPositions.indexOf(fret) !== -1){ %>
-                
-                <div class = "noteFret singleFretMark" data-note={`noteName`}></div>  <!--fret marker-->
+                <div class = "noteFret singleFretMark" data-note=<%=noteName%>></div>  <!--fret marker-->
             <%}else if (i === 0 && doubleFretMarkPositions.indexOf(fret) !== -1) {%>
-                <div class = "noteFret" data-note={`noteName`}><div class = "doubleFretMark"></div></div> <!--fret marker-->
+                <div class = "noteFret" data-note=<%=noteName%>><div class = "doubleFretMark"></div></div> <!--fret marker-->
             <%}else {%>
-                <div class = "noteFret"data-note={`noteName`}></div>
+                <div class = "noteFret" data-note=<%=noteName%>></div>
             <%}%>
         <%}%>
         </div>
