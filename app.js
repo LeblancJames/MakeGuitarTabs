@@ -3,7 +3,8 @@ const engine = require('ejs-mate');
 const app = express();
 const port = 3000;
 const path = require('path');
-
+const EventEmitter = require('events');
+const emitter = new EventEmitter();
 //access variables from controller and models
 const {fretboard} = require('./models/fretboard');
 let numberOfStrings = fretboard.numberOfStrings;
