@@ -1,4 +1,29 @@
-<link rel="stylesheet" href="/stylesheet.css">
+<!--fretboard template below clear board, export, etc menu-->
 
-<div class = "fretboard">        
+<link rel="stylesheet" href="/stylesheet.css">
+<!--above fretboard-->
+<h6>*Note: Guitar instrument, flat accidental and 12 frets are set by default</h6>
+<div class="row">
+    <div class="mb-3 d-flex mb-3 col 6">
+        <!--dropdown for instrument selection-->
+        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="instrument-selector">
+            <option selected>Select an Instrument</option>     
+        </select>
+        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="accidental-selector">
+            <option selected>Select Accidental</option>     
+        </select>
+        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="fret-number-selector">
+            <option selected>Number of Frets</option>     
+        </select>
+    </div>
+    <div class="form-check form-switch col-2">
+        <input class="form-check-input" type="checkbox" id="show-all-notes">
+        <label class="form-check-label" for="show-all-notes">Show All Notes</label>
+    </div>
+    <div class="form-check form-switch col-3">
+        <input class="form-check-input" type="checkbox" id="show-same-notes">
+        <label class="form-check-label" for="show-same-notes">Show Same Notes</label>
+    </div>
+</div>
+<div class = "fretboard">     
 </div>
