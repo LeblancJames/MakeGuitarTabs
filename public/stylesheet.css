@@ -48,6 +48,14 @@
     position: relative;
 }
 
+.note-fret-number {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    position: relative;
+}
+
+
 .note-fret:first-child{
     background: #161717;
     min-width: 55px;

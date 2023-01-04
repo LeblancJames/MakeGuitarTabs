@@ -3,6 +3,7 @@
 
     const root = document.documentElement;
     const fretboard = document.querySelector('.fretboard');
+    const fretboardNumbers = document.querySelector('.fretboard-numbers')
     const notesFlat = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
     const notesSharp = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     
@@ -66,7 +67,8 @@
             }
         },
         setUpFretboard(){
-            fretboard.innerHTML = '';
+            fretboard.innerHTML = ''; //resets board amount 
+            fretboardNumbers.innerHTML = ''; //resets number span
             root.style.setProperty('--number-of-strings', numberOfStrings);
             //add strings
             for (let i = 0; i < numberOfStrings; i++){
@@ -76,10 +78,18 @@
     
                 //create frets
                 for (let fret = 0; fret <= numberOfFrets; fret++){
+
                     let noteFret = tools.createElement('div');
                     noteFret.classList.add('note-fret');
                     string.appendChild(noteFret); 
                     
+                    if(i === 0){
+                        let noteFretNumber = tools.createElement('span');
+                        noteFretNumber.innerHTML = fret;
+                        fretboardNumbers.appendChild(noteFretNumber);
+                        noteFretNumber.classList.add('note-fret-number');
+                    }
+
                     let noteName = this.generateNoteNames((fret + instrumentTuningPresets[selectedInstrument][i]), accidentals)
                     noteFret.setAttribute('data-note', noteName);
                     
@@ -141,6 +151,9 @@
              //listen for fret number change
              selectedFretNumber.addEventListener('change', (event) =>{
                 numberOfFrets = event.target.value;
+                if (event.target.value == 'Number of Frets'){
+                    numberOfFrets = 12;
+                }
                 this.setUpFretboard();
             });
             //create listener for showing fret note upon hovering over with mouse
