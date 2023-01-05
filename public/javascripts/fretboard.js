@@ -74,6 +74,7 @@
             for (let i = 0; i < numberOfStrings; i++){
                 let string = tools.createElement('div');
                 string.classList.add('string');
+                string.setAttribute('number', i);
                 fretboard.appendChild(string);
     
                 //create frets
@@ -81,6 +82,7 @@
 
                     let noteFret = tools.createElement('div');
                     noteFret.classList.add('note-fret');
+                    noteFret.setAttribute('number', fret);
                     string.appendChild(noteFret); 
                     
                     if(i === 0){
