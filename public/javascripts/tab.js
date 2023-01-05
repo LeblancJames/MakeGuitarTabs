@@ -1,4 +1,9 @@
 const clearBoardButton = document.querySelector('#clear-board-button');
+const removePreviousButton = document.querySelector('#remove-previous-button');
+const createEmptyColumnButton = document.querySelector('#create-empty-column-button');
+const createBarButton = document.querySelector('#create-bar-button');
+const newRowButton = document.querySelector('#new-row-button');
+
 
 const tabContainer = document.querySelector('#tab-container')
 const fretboard = document.querySelector('.fretboard');
@@ -23,7 +28,6 @@ const app = {
     },
     setUpTab(){
         const emptyArea = document.querySelector('.empty-area')
-        console.log(emptyArea);
         let numStrings = fretboard.childElementCount;
         let newColumn = tools.createElement('div');
         newColumn.classList.add('tab-column');
@@ -73,7 +77,24 @@ const app = {
         });
         clearBoardButton.addEventListener('click', () => {
             clearBoard();
-        })
+        });
+        removePreviousButton.addEventListener('click', () => {
+            if (tabRow.childElementCount > 2) {
+                tabRow.removeChild(tabRow.lastChild);
+            } else {
+                alert('No notes left to remove');
+            }
+        });
+        createEmptyColumnButton.addEventListener('click', () => {
+            const emptyArea = document.querySelector('.empty-area');
+            let numStrings = fretboard.childElementCount;
+            createColumn('-', emptyArea, numStrings);
+        });
+        createBarButton.addEventListener('click', () => {
+            const emptyArea = document.querySelector('.empty-area');
+            let numStrings = fretboard.childElementCount;
+            createColumn('|', emptyArea, numStrings);
+        });
     },
 }
 
