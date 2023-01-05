@@ -1,13 +1,14 @@
 <% layout('./layouts/boilerplate') -%>
 
-<div class = 'container mw-100 mx-0'>
+<div class = "container mw-100 mx-0">
     <div class="row">
         <div class="col-9">
             <div class="navbar my-2 mx-3">
                 <div class ="d-inline">
-                    <a href="#" class="btn btn-white btn-outline-dark ">Clear Board</a>
-                    <a href="#" class="btn btn-white btn-outline-dark mx-1">Remove Previous </a>
-                    <a href="#" class="btn btn-white btn-outline-dark mx-1">New Row</a>  
+                    <div class="btn btn-white btn-outline-dark" id = "clear-board-button">Clear Board</div>
+                    <div class="btn btn-white btn-outline-dark mx-1" id = "remove-previous-button">Remove Previous </div>
+                    <div class="btn btn-white btn-outline-dark" id = "create-empty-column-button">Create Empty Column</div>
+                    <div class="btn btn-white btn-outline-dark mx-1" id="new-row-button">New Row</div>  
                 </div>
                 <div class = "d-inline">
                     <a href="#" class="btn btn-white btn-outline-dark mx-1">Export </a>

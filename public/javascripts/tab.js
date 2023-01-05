@@ -1,9 +1,10 @@
+const clearBoardButton = document.querySelector('#clear-board-button');
+
+const tabContainer = document.querySelector('#tab-container')
 const fretboard = document.querySelector('.fretboard');
 const selectedInstrumentSelector = document.querySelector('#instrument-selector');
-
 const notesFlat = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
 const notesSharp = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-
 const instrumentTuningPresets = {
     'Guitar': [4, 11, 7, 2, 9, 4],
     'Bass (4 string)': [7, 2, 9, 4],
@@ -14,6 +15,7 @@ const instrumentTuningPresets = {
 
 let tabRow = document.querySelector('.tab-row');
 
+
 const app = {
     init() {
         this.setUpTab();
@@ -21,9 +23,11 @@ const app = {
     },
     setUpTab(){
         const emptyArea = document.querySelector('.empty-area')
+        console.log(emptyArea);
         let numStrings = fretboard.childElementCount;
         let newColumn = tools.createElement('div');
         newColumn.classList.add('tab-column');
+        let tabRow = document.querySelector('.tab-row');
         tabRow.insertBefore(newColumn, emptyArea);
         //add a span to the new column for the number of strings
         for (let i = 0; i < numStrings; i++){
@@ -33,20 +37,11 @@ const app = {
             tabSpan.innerHTML = tabStartNote;
             newColumn.appendChild(tabSpan);
         }
-        let newColumn2 = tools.createElement('div');
-        newColumn2.classList.add('tab-column');
-        tabRow.insertBefore(newColumn2, emptyArea);
-        //create the border between the tuning notes and tab
-        for (let i = 0; i < numStrings; i++){
-            let tabSpan = tools.createElement('span');
-            tabSpan.innerHTML = '|';
-            newColumn2.appendChild(tabSpan);
-        }
+        createColumn('|', emptyArea, numStrings);
     },
     setUpEventListeners(){
         selectedInstrumentSelector.addEventListener('change', () =>{
-            tabRow.innerHTML = '<div class="empty-area"></div>',
-            this.setUpTab();
+            clearBoard();
         });
         fretboard.addEventListener('click', (event) => {
             //creates a new column
@@ -72,28 +67,35 @@ const app = {
                     }
                 }
                 //create two empty columns
-
-                let newColumn2 = tools.createElement('div');
-                    newColumn2.classList.add('tab-column');
-                    tabRow.insertBefore(newColumn2, emptyArea);
-                for (let i = 0; i < numStrings; i++){
-                    let tabSpan = tools.createElement('span');
-                    tabSpan.innerHTML = '-';
-                    newColumn2.appendChild(tabSpan);
-                }
-                
-                let newColumn3 = tools.createElement('div');
-                newColumn3.classList.add('tab-column');
-                tabRow.insertBefore(newColumn3, emptyArea);
-                for (let i = 0; i < numStrings; i++){
-                    let tabSpan = tools.createElement('span');
-                    tabSpan.innerHTML = '-';
-                newColumn3.appendChild(tabSpan);
-                }
+                createColumn('-', emptyArea, numStrings);
+                createColumn('-', emptyArea, numStrings);
             }
         });
+        clearBoardButton.addEventListener('click', () => {
+            clearBoard();
+        })
     },
 }
+
+//save the last child and then remove until only 2 columns remain
+const clearBoard = () => {
+    while (tabRow.childElementCount){
+        tabRow.removeChild(tabRow.lastChild);
+    }
+    app.setUpTab();
+}
+//create a new column in tabs
+const createColumn = (spanContent, emptyArea, numStrings) => {
+    let newColumn = tools.createElement('div');
+    newColumn.classList.add('tab-column');
+    tabRow.insertBefore(newColumn, emptyArea);
+    for (let i = 0; i < numStrings; i++){
+        let tabSpan = tools.createElement('span');
+        tabSpan.innerHTML = spanContent;
+        newColumn.appendChild(tabSpan);
+    }
+}
+//helps create element
 const tools = {
     createElement(element, content){
         element = document.createElement(element);
