@@ -1,4 +1,4 @@
-//home page controls
+//fretboard functionality 
 (function() {
 
     const root = document.documentElement;

@@ -10,7 +10,7 @@
 }
 
 
-
+/*fretboad styles*/
 .fretboard {
     display: flex;
     flex-direction: column;
@@ -109,5 +109,20 @@
     background-color: #808080;
     top: calc(var(--double-fretmark-position-2)* 1px);
     transform: translate(-110%, -50%);
+}
+
+/*tab styles */
+.tab-column {
+    width: min-content;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.tab-column span{
+    width: 16px;
+    height: 1rem;
+    text-align: center;
+    vertical-align:middle;
+    font-weight: 500;
 }
 
