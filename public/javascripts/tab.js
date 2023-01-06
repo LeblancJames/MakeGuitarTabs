@@ -27,10 +27,17 @@ let numStrings;
 
 let inputString = 0; //string that the fret note will be on
 
+
 const app = {
     init() {
         this.setUpTab(emptyArea, tabRow);
         this.setUpEventListeners();
+
+        window.addEventListener('keydown', function(e) {
+            if(e.key == 32 && e.target == document.body) {
+              e.preventDefault();
+            }
+          });
     },
     setUpTab(emptyArea, tabRow){
         numStrings = fretboard.childElementCount;
@@ -111,14 +118,15 @@ const app = {
         newRowButton.addEventListener('click', () => {
             createNewRow()
         });
-        //keydown event listeners 
 
+        //keydown event listeners 
+        
         //number press
-        document.addEventListener("keypress", (event) => {
+        document.addEventListener("keydown", (event) => {
             if ((isFinite(event.key)) && (event.key != ' ')) {
                 tabRow = document.querySelector('#tab-container').lastElementChild;
-                let numStrings = fretboard.childElementCount;
-                let newColumn = tools.createElement('div');
+                numStrings = fretboard.childElementCount;
+                newColumn = tools.createElement('div');
                 newColumn.classList.add('tab-column');
                 tabRow.insertBefore(newColumn, emptyArea);
                 //fills column with '-' or Fret Note
@@ -145,17 +153,63 @@ const app = {
                     }
                     
             }
-        });
-        //special characters 
-        document.addEventListener("keypress", (event) => {
+
+            //special characters 
             if (!event.getModifierState("CapsLock")) {
-                if (event.key == '/'){
-                    deleteColumn();
-                    deleteColumn();
-                    createColumn('-', numStrings,'/');
+                if (event.key == '/'){createspecialKey(numStrings, '/')}
+                if (event.key == 'H'){createspecialKey(numStrings, 'H')}
+                if (event.key == 'h'){createspecialKey(numStrings, 'h')}
+                if (event.key == 'P'){createspecialKey(numStrings, 'P')}
+                if (event.key == 'p'){createspecialKey(numStrings, 'p')}
+                if (event.key == 'B'){createspecialKey(numStrings, 'B')}
+                if (event.key == 'b'){createspecialKey(numStrings, 'b')}
+                if (event.key == 'R'){createspecialKey(numStrings, 'R')}
+                if (event.key == 'r'){createspecialKey(numStrings, 'r')}
+            
+                if (event.key == 'V'){createspecialKey(numStrings, 'V'), createColumn('-', numStrings),createColumn('-', numStrings)}
+                if (event.key == 'v'){createspecialKey(numStrings, 'v'), createColumn('-', numStrings),createColumn('-', numStrings)}
+            } 
+            if (event.getModifierState("CapsLock")) {
+                if (event.key == '/'){createColumn('-',numStrings, '/')}
+                if (event.key == 'H'){createColumn('-',numStrings, 'h')}
+                if (event.key == 'P'){createColumn('-',numStrings, 'p')}
+                if (event.key == 'B'){createColumn('-',numStrings, 'b')}
+                if (event.key == 'R'){createColumn('-',numStrings, 'r')}
+                if (event.key == 'V'){createColumn('-',numStrings, 'v')}
+
+
+                if (event.key == 'H' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'H')}
+                if (event.key == 'P' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'P')}
+                if (event.key == 'B' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'B')}
+                if (event.key == 'R' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'R')}
+                if (event.key == 'V' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'V')}
+            }
+
+            if (event.key == 'x'){createColumn('-', numStrings, 'x')}
+            if (event.key == '|'){createColumn('|', numStrings)}
+            if (event.key == 'X'){createColumn('-', numStrings, 'x')}
+
+            
+            if (event.key == ' '){createColumn('-', numStrings), event.preventDefault()}
+            if (event.key === 'Backspace'){deleteColumn()}
+            if (event.key === 'Enter'){createNewRow()}
+
+            if(event.key == 'w'){
+                if (inputString === 0){
+                    inputString = 5;
+                } else {
+                    inputString -= 1;
+                }
+            }
+            if(event.key == 's'){
+                if (inputString === 5){
+                    inputString = 0;
+                } else {
+                    inputString += 1;
                 }
             }
         });
+
     },
 }
 
@@ -170,7 +224,7 @@ const clearBoard = () => {
 const createColumn = function(spanContent, numStrings, differentValue) {
     tabRow = document.querySelector('#tab-container').lastElementChild;
     emptyArea = document.querySelector('#tab-container').lastElementChild.lastElementChild; 
-    let newColumn = tools.createElement('div');
+    newColumn = tools.createElement('div');
     newColumn.classList.add('tab-column');
     tabRow.insertBefore(newColumn, emptyArea);
     for (let i = 0; i < numStrings; i++){
@@ -188,9 +242,13 @@ const deleteColumn = () => {
     tabRow = document.querySelector('#tab-container').lastElementChild;
     if (tabRow.childElementCount > 3) {
         tabRow.removeChild(tabRow.lastElementChild.previousElementSibling);
+    } else if(tabContainer.childElementCount > 2){       
+        tabContainer.removeChild(tabContainer.lastElementChild);     
     } else {
         alert('No notes left to remove');
     }
+    tabRow = document.querySelector('#tab-container').lastElementChild;
+    emptyArea = document.querySelector('#tab-container').lastElementChild.lastElementChild; 
 }
 //create a new row
 const createNewRow = () => {
@@ -206,6 +264,12 @@ const createNewRow = () => {
     app.setUpTab(emptyArea, tabRow);
 }
 
+//create special key
+const createspecialKey = (numStrings, specialKeyValue) => {
+    deleteColumn();
+    deleteColumn();
+    createColumn('-', numStrings, specialKeyValue);
+}
 //helps create element
 const tools = {
     createElement(element, content){
@@ -216,5 +280,7 @@ const tools = {
         return element;
     }
 }
+
+
 
 app.init();
