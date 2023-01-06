@@ -33,11 +33,6 @@ const app = {
         this.setUpTab(emptyArea, tabRow);
         this.setUpEventListeners();
 
-        window.addEventListener('keydown', function(e) {
-            if(e.key == 32 && e.target == document.body) {
-              e.preventDefault();
-            }
-          });
     },
     setUpTab(emptyArea, tabRow){
         numStrings = fretboard.childElementCount;
@@ -55,6 +50,8 @@ const app = {
 
         //creates second column that seperates tuning notes from tabs itself
         createColumn('|', numStrings);
+        colorInputString();
+
     },
     setUpEventListeners(){
         selectedInstrumentSelector.addEventListener('change', () =>{
@@ -73,6 +70,7 @@ const app = {
             for (let i = 0; i < numStrings; i++){
                 stringNum = event.target.parentElement.getAttribute('number'); //check for string number
                 inputString = stringNum;
+                colorInputString();
                 nodeValue = event.target.getAttributeNode('number').nodeValue;
                 if (i == stringNum){
                     let tabSpan = tools.createElement('span', nodeValue);
@@ -185,28 +183,31 @@ const app = {
                 if (event.key == 'V' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'V')}
             }
 
-            if (event.key == 'x'){createColumn('-', numStrings, 'x')}
+            if (event.key == 'x' || event.key == 'X'){createColumn('-', numStrings, 'x')}
             if (event.key == '|'){createColumn('|', numStrings)}
-            if (event.key == 'X'){createColumn('-', numStrings, 'x')}
 
             
             if (event.key == ' '){createColumn('-', numStrings), event.preventDefault()}
             if (event.key === 'Backspace'){deleteColumn()}
             if (event.key === 'Enter'){createNewRow()}
 
-            if(event.key == 'w'){
+            if(event.key == 'w' || event.key == 'W'){
                 if (inputString === 0){
                     inputString = 5;
                 } else {
                     inputString -= 1;
                 }
+                colorInputString();
+
             }
-            if(event.key == 's'){
+            if(event.key == 's' || event.key == 'S'){
                 if (inputString === 5){
                     inputString = 0;
                 } else {
                     inputString += 1;
                 }
+                colorInputString();
+
             }
         });
 
@@ -269,6 +270,19 @@ const createspecialKey = (numStrings, specialKeyValue) => {
     deleteColumn();
     deleteColumn();
     createColumn('-', numStrings, specialKeyValue);
+}
+
+//color input string 
+const colorInputString = () => {
+    //remove colors from all strings
+    let checkColoredStrings = document.querySelector('#tab-container').lastElementChild.firstElementChild;
+    for (i = 0; i < numStrings; i++){
+        checkColoredStrings.children[i].classList.remove('color-this-string');
+    }
+    //add color to current input string
+    let colorThisString = checkColoredStrings.children[inputString];
+    colorThisString.classList.add('color-this-string')
+    console.log(colorThisString)
 }
 //helps create element
 const tools = {

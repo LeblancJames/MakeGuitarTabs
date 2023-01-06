@@ -131,3 +131,8 @@
     overflow: hidden;  
     margin-bottom: 2em;
 }
+
+.color-this-string {
+    color: blue;
+    font-weight: bold;
+}
