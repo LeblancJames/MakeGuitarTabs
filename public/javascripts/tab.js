@@ -23,7 +23,9 @@ const instrumentTuningPresets = {
 let tabRow = document.querySelector('#tab-container').lastElementChild;
 let emptyArea = document.querySelector('#tab-container').lastElementChild.lastElementChild;
 let newColumn;
+let numStrings;
 
+let inputString = 0; //string that the fret note will be on
 
 const app = {
     init() {
@@ -31,7 +33,7 @@ const app = {
         this.setUpEventListeners();
     },
     setUpTab(emptyArea, tabRow){
-        let numStrings = fretboard.childElementCount;
+        numStrings = fretboard.childElementCount;
         newColumn = tools.createElement('div');
         newColumn.classList.add('tab-column');
         tabRow.insertBefore(newColumn, emptyArea);
@@ -40,6 +42,7 @@ const app = {
             //get the first note of each string
             let tabStartNote = fretboard.children[i].firstChild.getAttributeNode('data-note').nodeValue
             let tabSpan = tools.createElement('span', tabStartNote);
+            tabSpan.classList.add('tabSpan');
             newColumn.appendChild(tabSpan);
         }
 
@@ -53,32 +56,37 @@ const app = {
         fretboard.addEventListener('click', (event) => {
             //creates a new column
             tabRow = document.querySelector('#tab-container').lastElementChild;
-            let numStrings = fretboard.childElementCount;
+
             if (event.target.classList.contains('note-fret')){
                 let newColumn = tools.createElement('div');
                 newColumn.classList.add('tab-column');
                 tabRow.insertBefore(newColumn, emptyArea);
 
-                //fills column with '-' or Fret Note
-                for (let i = 0; i < numStrings; i++){
-                    stringNum = event.target.parentElement.getAttribute('number'); //check for string number
-                    nodeValue = event.target.getAttributeNode('number').nodeValue;
-                    if (i == stringNum){
-                        let tabSpan = tools.createElement('span', nodeValue);
-                        newColumn.appendChild(tabSpan);
-                    } else{
-                        let tabSpan = tools.createElement('span', '-');
-                        newColumn.appendChild(tabSpan);
-                    }
+            //fills column with '-' or Fret Note
+            for (let i = 0; i < numStrings; i++){
+                stringNum = event.target.parentElement.getAttribute('number'); //check for string number
+                inputString = stringNum;
+                nodeValue = event.target.getAttributeNode('number').nodeValue;
+                if (i == stringNum){
+                    let tabSpan = tools.createElement('span', nodeValue);
+                    tabSpan.classList.add('tabSpan');
+                    newColumn.appendChild(tabSpan);
+                } else{
+                    let tabSpan = tools.createElement('span', '-');
+                    tabSpan.classList.add('tabSpan');
+                    newColumn.appendChild(tabSpan);
                 }
-                //create two empty columns
+            }
+            //create two empty columns if caps is on
+            if (!event.getModifierState("CapsLock")) {
                 createColumn('-', numStrings);
                 createColumn('-', numStrings);
-
-                // let isOverflowing = tabRow.clientWidth < tabRow.scrollWidth;
-                // if(isOverflowing){
-                //     createNewRow();
-                // }
+            }
+            //check if tab is past appropriate size and entering instructions container
+            let isOverflowing = tabRow.clientWidth < tabRow.scrollWidth;
+                if(isOverflowing){
+                    createNewRow();
+                }
                 
             }
         });
@@ -86,12 +94,7 @@ const app = {
             clearBoard();
         });
         removePreviousButton.addEventListener('click', () => {
-            console.log(tabRow);
-            if (tabRow.childElementCount > 2) {
-                tabRow.removeChild(tabRow.lastElementChild.previousElementSibling);
-            } else {
-                alert('No notes left to remove');
-            }
+           deleteColumn();
         });
         createEmptyColumnButton.addEventListener('click', () => {
             tabRow = document.querySelector('#tab-container').lastElementChild;
@@ -108,6 +111,51 @@ const app = {
         newRowButton.addEventListener('click', () => {
             createNewRow()
         });
+        //keydown event listeners 
+
+        //number press
+        document.addEventListener("keypress", (event) => {
+            if ((isFinite(event.key)) && (event.key != ' ')) {
+                tabRow = document.querySelector('#tab-container').lastElementChild;
+                let numStrings = fretboard.childElementCount;
+                let newColumn = tools.createElement('div');
+                newColumn.classList.add('tab-column');
+                tabRow.insertBefore(newColumn, emptyArea);
+                //fills column with '-' or Fret Note
+                for (let i = 0; i < numStrings; i++){
+                    if (i == inputString){
+                        let tabSpan = tools.createElement('span', event.key);
+                        tabSpan.classList.add('tabSpan');
+                        newColumn.appendChild(tabSpan);
+                    } else{
+                        let tabSpan = tools.createElement('span', '-');
+                        tabSpan.classList.add('tabSpan');
+                        newColumn.appendChild(tabSpan);
+                    }
+                }
+                //create two empty columns if caps is on
+                if (!event.getModifierState("CapsLock")) {
+                    createColumn('-', numStrings);
+                    createColumn('-', numStrings);
+                }
+                //check if tab is past appropriate size and entering instructions container
+                let isOverflowing = tabRow.clientWidth < tabRow.scrollWidth;
+                    if(isOverflowing){
+                        createNewRow();
+                    }
+                    
+            }
+        });
+        //special characters 
+        document.addEventListener("keypress", (event) => {
+            if (!event.getModifierState("CapsLock")) {
+                if (event.key == '/'){
+                    deleteColumn();
+                    deleteColumn();
+                    createColumn('-', numStrings,'/');
+                }
+            }
+        });
     },
 }
 
@@ -119,7 +167,7 @@ const clearBoard = () => {
     createNewRow();
 }
 //create a new column in tabs
-const createColumn = (spanContent, numStrings) => {
+const createColumn = function(spanContent, numStrings, differentValue) {
     tabRow = document.querySelector('#tab-container').lastElementChild;
     emptyArea = document.querySelector('#tab-container').lastElementChild.lastElementChild; 
     let newColumn = tools.createElement('div');
@@ -127,7 +175,21 @@ const createColumn = (spanContent, numStrings) => {
     tabRow.insertBefore(newColumn, emptyArea);
     for (let i = 0; i < numStrings; i++){
         let tabSpan = tools.createElement('span', spanContent);
+        tabSpan.classList.add('tabSpan');
         newColumn.appendChild(tabSpan);
+    }
+    if (arguments.length > 2){
+        newColumn.children[inputString].textContent = differentValue;
+    }
+}
+
+//delete column
+const deleteColumn = () => {
+    tabRow = document.querySelector('#tab-container').lastElementChild;
+    if (tabRow.childElementCount > 3) {
+        tabRow.removeChild(tabRow.lastElementChild.previousElementSibling);
+    } else {
+        alert('No notes left to remove');
     }
 }
 //create a new row
