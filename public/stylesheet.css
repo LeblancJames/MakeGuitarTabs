@@ -136,3 +136,11 @@
     color: blue;
     font-weight: bold;
 }
+
+.tabSpan{
+    cursor: pointer;
+}
+
+span[contenteditable] {
+    white-space: pre;
+}

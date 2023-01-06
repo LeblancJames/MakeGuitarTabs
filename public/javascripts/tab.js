@@ -45,6 +45,7 @@ const app = {
             let tabStartNote = fretboard.children[i].firstChild.getAttributeNode('data-note').nodeValue
             let tabSpan = tools.createElement('span', tabStartNote);
             tabSpan.classList.add('tabSpan');
+            tabSpan.setAttribute('contenteditable', "plaintext-only");
             newColumn.appendChild(tabSpan);
         }
 
@@ -75,10 +76,12 @@ const app = {
                 if (i == stringNum){
                     let tabSpan = tools.createElement('span', nodeValue);
                     tabSpan.classList.add('tabSpan');
+                    tabSpan.setAttribute('contenteditable', "plaintext-only");
                     newColumn.appendChild(tabSpan);
                 } else{
                     let tabSpan = tools.createElement('span', '-');
                     tabSpan.classList.add('tabSpan');
+                    tabSpan.setAttribute('contenteditable', "plaintext-only");
                     newColumn.appendChild(tabSpan);
                 }
             }
@@ -116,101 +119,21 @@ const app = {
         newRowButton.addEventListener('click', () => {
             createNewRow()
         });
-
         //keydown event listeners 
-        
-        //number press
-        document.addEventListener("keydown", (event) => {
-            if ((isFinite(event.key)) && (event.key != ' ')) {
-                tabRow = document.querySelector('#tab-container').lastElementChild;
-                numStrings = fretboard.childElementCount;
-                newColumn = tools.createElement('div');
-                newColumn.classList.add('tab-column');
-                tabRow.insertBefore(newColumn, emptyArea);
-                //fills column with '-' or Fret Note
-                for (let i = 0; i < numStrings; i++){
-                    if (i == inputString){
-                        let tabSpan = tools.createElement('span', event.key);
-                        tabSpan.classList.add('tabSpan');
-                        newColumn.appendChild(tabSpan);
-                    } else{
-                        let tabSpan = tools.createElement('span', '-');
-                        tabSpan.classList.add('tabSpan');
-                        newColumn.appendChild(tabSpan);
-                    }
-                }
-                //create two empty columns if caps is on
-                if (!event.getModifierState("CapsLock")) {
-                    createColumn('-', numStrings);
-                    createColumn('-', numStrings);
-                }
-                //check if tab is past appropriate size and entering instructions container
-                let isOverflowing = tabRow.clientWidth < tabRow.scrollWidth;
-                    if(isOverflowing){
-                        createNewRow();
-                    }
-                    
-            }
+        document.addEventListener("keydown", keyDownEvents);
 
-            //special characters 
-            if (!event.getModifierState("CapsLock")) {
-                if (event.key == '/'){createspecialKey(numStrings, '/')}
-                if (event.key == 'H'){createspecialKey(numStrings, 'H')}
-                if (event.key == 'h'){createspecialKey(numStrings, 'h')}
-                if (event.key == 'P'){createspecialKey(numStrings, 'P')}
-                if (event.key == 'p'){createspecialKey(numStrings, 'p')}
-                if (event.key == 'B'){createspecialKey(numStrings, 'B')}
-                if (event.key == 'b'){createspecialKey(numStrings, 'b')}
-                if (event.key == 'R'){createspecialKey(numStrings, 'R')}
-                if (event.key == 'r'){createspecialKey(numStrings, 'r')}
-            
-                if (event.key == 'V'){createspecialKey(numStrings, 'V'), createColumn('-', numStrings),createColumn('-', numStrings)}
-                if (event.key == 'v'){createspecialKey(numStrings, 'v'), createColumn('-', numStrings),createColumn('-', numStrings)}
-            } 
-            if (event.getModifierState("CapsLock")) {
-                if (event.key == '/'){createColumn('-',numStrings, '/')}
-                if (event.key == 'H'){createColumn('-',numStrings, 'h')}
-                if (event.key == 'P'){createColumn('-',numStrings, 'p')}
-                if (event.key == 'B'){createColumn('-',numStrings, 'b')}
-                if (event.key == 'R'){createColumn('-',numStrings, 'r')}
-                if (event.key == 'V'){createColumn('-',numStrings, 'v')}
-
-
-                if (event.key == 'H' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'H')}
-                if (event.key == 'P' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'P')}
-                if (event.key == 'B' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'B')}
-                if (event.key == 'R' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'R')}
-                if (event.key == 'V' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'V')}
-            }
-
-            if (event.key == 'x' || event.key == 'X'){createColumn('-', numStrings, 'x')}
-            if (event.key == '|'){createColumn('|', numStrings)}
-
-            
-            if (event.key == ' '){createColumn('-', numStrings), event.preventDefault()}
-            if (event.key === 'Backspace'){deleteColumn()}
-            if (event.key === 'Enter'){createNewRow()}
-
-            if(event.key == 'w' || event.key == 'W'){
-                if (inputString === 0){
-                    inputString = 5;
-                } else {
-                    inputString -= 1;
-                }
-                colorInputString();
-
-            }
-            if(event.key == 's' || event.key == 'S'){
-                if (inputString === 5){
-                    inputString = 0;
-                } else {
-                    inputString += 1;
-                }
-                colorInputString();
-
+        tabContainer.addEventListener('click', (event) => {
+            if (event.target.classList.contains('tabSpan')){
+                let container = event.target;
+                document.removeEventListener('keydown', keyDownEvents);
+                document.addEventListener('keydown', (event) =>{
+                    if (event.key === 'Enter' || !event.target.classList.contains('tabSpan')){
+                        document.addEventListener("keydown", keyDownEvents);
+                        container.blur();
+                    } 
+                });           
             }
         });
-
     },
 }
 
@@ -231,6 +154,7 @@ const createColumn = function(spanContent, numStrings, differentValue) {
     for (let i = 0; i < numStrings; i++){
         let tabSpan = tools.createElement('span', spanContent);
         tabSpan.classList.add('tabSpan');
+        tabSpan.setAttribute('contenteditable', "plaintext-only");
         newColumn.appendChild(tabSpan);
     }
     if (arguments.length > 2){
@@ -282,7 +206,6 @@ const colorInputString = () => {
     //add color to current input string
     let colorThisString = checkColoredStrings.children[inputString];
     colorThisString.classList.add('color-this-string')
-    console.log(colorThisString)
 }
 //helps create element
 const tools = {
@@ -294,7 +217,99 @@ const tools = {
         return element;
     }
 }
+function keyDownEvents (event) {
+    if ((isFinite(event.key)) && (event.key != ' ')) {
+        tabRow = document.querySelector('#tab-container').lastElementChild;
+        numStrings = fretboard.childElementCount;
+        newColumn = tools.createElement('div');
+        newColumn.classList.add('tab-column');
+        tabRow.insertBefore(newColumn, emptyArea);
+        //fills column with '-' or Fret Note
+        for (let i = 0; i < numStrings; i++){
+            if (i == inputString){
+                let tabSpan = tools.createElement('span', event.key);
+                tabSpan.classList.add('tabSpan');
+                tabSpan.setAttribute('contenteditable', "plaintext-only");
+                newColumn.appendChild(tabSpan);
+            } else{
+                let tabSpan = tools.createElement('span', '-');
+                tabSpan.classList.add('tabSpan');
+                tabSpan.setAttribute('contenteditable', "plaintext-only");
+                newColumn.appendChild(tabSpan);
+            }
+        }
+        //create two empty columns if caps is on
+        if (!event.getModifierState("CapsLock")) {
+            createColumn('-', numStrings);
+            createColumn('-', numStrings);
+        }
+        //check if tab is past appropriate size and entering instructions container
+        let isOverflowing = tabRow.clientWidth < tabRow.scrollWidth;
+            if(isOverflowing){
+                createNewRow();
+            }
+            
+    }
 
+    //special characters 
+    if (!event.getModifierState("CapsLock")) {
+        if (event.key == '/'){createspecialKey(numStrings, '/')}
+        if (event.key == 'H'){createspecialKey(numStrings, 'H')}
+        if (event.key == 'h'){createspecialKey(numStrings, 'h')}
+        if (event.key == 'P'){createspecialKey(numStrings, 'P')}
+        if (event.key == 'p'){createspecialKey(numStrings, 'p')}
+        if (event.key == 'B'){createspecialKey(numStrings, 'B')}
+        if (event.key == 'b'){createspecialKey(numStrings, 'b')}
+        if (event.key == 'R'){createspecialKey(numStrings, 'R')}
+        if (event.key == 'r'){createspecialKey(numStrings, 'r')}
+    
+        if (event.key == 'V'){createspecialKey(numStrings, 'V'), createColumn('-', numStrings),createColumn('-', numStrings)}
+        if (event.key == 'v'){createspecialKey(numStrings, 'v'), createColumn('-', numStrings),createColumn('-', numStrings)}
+    } 
+    if (event.getModifierState("CapsLock")) {
+        if (event.key == '/'){createColumn('-',numStrings, '/')}
+        if (event.key == 'H'){createColumn('-',numStrings, 'h')}
+        if (event.key == 'P'){createColumn('-',numStrings, 'p')}
+        if (event.key == 'B'){createColumn('-',numStrings, 'b')}
+        if (event.key == 'R'){createColumn('-',numStrings, 'r')}
+        if (event.key == 'V'){createColumn('-',numStrings, 'v')}
+
+
+        if (event.key == 'H' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'H')}
+        if (event.key == 'P' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'P')}
+        if (event.key == 'B' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'B')}
+        if (event.key == 'R' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'R')}
+        if (event.key == 'V' && event.shiftKey){deleteColumn(),createColumn('-',numStrings, 'V')}
+    }
+
+    if (event.key == 'x' || event.key == 'X'){createColumn('-', numStrings, 'x')}
+    if (event.key == '|'){createColumn('|', numStrings)}
+
+    
+    if (event.key == ' '){createColumn('-', numStrings), event.preventDefault()}
+    if (event.key === 'Backspace'){deleteColumn()}
+    if (event.key === 'Enter'){createNewRow()}
+
+    if(event.key == 'w' || event.key == 'W'){
+        if (inputString === 0){
+            inputString = 5;
+        } else {
+            inputString -= 1;
+        }
+        colorInputString();
+
+    }
+    if(event.key == 's' || event.key == 'S'){
+        if (inputString === 5){
+            inputString = 0;
+        } else {
+            console.log(inputString)
+            inputString ++;
+        }
+        colorInputString();
+
+    }
+};
 
 
 app.init();
