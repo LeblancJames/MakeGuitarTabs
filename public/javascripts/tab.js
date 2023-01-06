@@ -19,20 +19,20 @@ const instrumentTuningPresets = {
     'Ukelele': [9, 4, 0, 7],
 }
 
-let emptyArea = document.querySelector('.empty-area:last-child')
-let tabRow = document.querySelector('.tab-row:last-child');
 
+let tabRow = document.querySelector('#tab-container').lastElementChild;
+let emptyArea = document.querySelector('#tab-container').lastElementChild.lastElementChild;
+let newColumn;
 
 
 const app = {
     init() {
-        console.log(widthOfWindow);
         this.setUpTab(emptyArea, tabRow);
         this.setUpEventListeners();
     },
     setUpTab(emptyArea, tabRow){
         let numStrings = fretboard.childElementCount;
-        let newColumn = tools.createElement('div');
+        newColumn = tools.createElement('div');
         newColumn.classList.add('tab-column');
         tabRow.insertBefore(newColumn, emptyArea);
         //add a span to the new column for the number of strings to create first column 
@@ -52,7 +52,7 @@ const app = {
         });
         fretboard.addEventListener('click', (event) => {
             //creates a new column
-            let tabRow = document.querySelector('.tab-row:last-child');
+            tabRow = document.querySelector('#tab-container').lastElementChild;
             let numStrings = fretboard.childElementCount;
             if (event.target.classList.contains('note-fret')){
                 let newColumn = tools.createElement('div');
@@ -86,17 +86,22 @@ const app = {
             clearBoard();
         });
         removePreviousButton.addEventListener('click', () => {
+            console.log(tabRow);
             if (tabRow.childElementCount > 2) {
-                tabRow.removeChild(tabRow.lastChild);
+                tabRow.removeChild(tabRow.lastElementChild.previousElementSibling);
             } else {
                 alert('No notes left to remove');
             }
         });
         createEmptyColumnButton.addEventListener('click', () => {
+            tabRow = document.querySelector('#tab-container').lastElementChild;
+            emptyArea = document.querySelector('#tab-container').lastElementChild.lastElementChild;
             let numStrings = fretboard.childElementCount;
             createColumn('-', numStrings);
         });
         createBarButton.addEventListener('click', () => {
+            tabRow = document.querySelector('#tab-container').lastElementChild;
+            emptyArea = document.querySelector('#tab-container').lastElementChild.lastElementChild;
             let numStrings = fretboard.childElementCount;
             createColumn('|', numStrings);
         });
@@ -115,8 +120,8 @@ const clearBoard = () => {
 }
 //create a new column in tabs
 const createColumn = (spanContent, numStrings) => {
-    emptyArea = document.querySelector('.empty-area:last-child')
-    tabRow = document.querySelector('.tab-row:last-child');
+    tabRow = document.querySelector('#tab-container').lastElementChild;
+    emptyArea = document.querySelector('#tab-container').lastElementChild.lastElementChild; 
     let newColumn = tools.createElement('div');
     newColumn.classList.add('tab-column');
     tabRow.insertBefore(newColumn, emptyArea);
@@ -134,8 +139,8 @@ const createNewRow = () => {
     nextEmptyArea.classList.add('empty-area');
     nextRow.appendChild(nextEmptyArea);
     tabContainer.appendChild(nextRow);
-    emptyArea = document.querySelector('.empty-area:last-child')
-    tabRow = document.querySelector('.tab-row:last-child');
+    tabRow = document.querySelector('#tab-container').lastElementChild;
+    emptyArea = document.querySelector('#tab-container').lastElementChild.lastElementChild;
     app.setUpTab(emptyArea, tabRow);
 }
 
