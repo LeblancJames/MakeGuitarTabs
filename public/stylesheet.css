@@ -144,3 +144,7 @@
 span[contenteditable] {
     white-space: pre;
 }
+
+.card-body{
+    width: 27em;
+}

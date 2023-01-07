@@ -18,6 +18,14 @@ app.get('/', (req, res) => {
     res.render('./templates/home');
 })
 
+app.get('/login', (req, res) => {
+    res.render('./templates/login');
+})
+
+app.get('/register', (req, res) => {
+    res.render('./templates/register');
+})
+
 app.listen(port, () => {
     console.log('listening');
 })

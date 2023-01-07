@@ -32,8 +32,14 @@ const app = {
     init() {
         this.setUpTab(emptyArea, tabRow);
         this.setUpEventListeners();
+        this.deleteFirstrow(); //Bug creates two rows upon loading
 
     },
+    //bug fix
+    deleteFirstrow(){
+        tabContainer.removeChild(tabContainer.firstElementChild);     
+    },
+    
     setUpTab(emptyArea, tabRow){
         numStrings = fretboard.childElementCount;
         newColumn = tools.createElement('div');
@@ -167,7 +173,7 @@ const deleteColumn = () => {
     tabRow = document.querySelector('#tab-container').lastElementChild;
     if (tabRow.childElementCount > 3) {
         tabRow.removeChild(tabRow.lastElementChild.previousElementSibling);
-    } else if(tabContainer.childElementCount > 2){       
+    } else if(tabContainer.childElementCount > 1){       
         tabContainer.removeChild(tabContainer.lastElementChild);     
     } else {
         alert('No notes left to remove');
@@ -310,6 +316,5 @@ function keyDownEvents (event) {
 
     }
 };
-
 
 app.init();
