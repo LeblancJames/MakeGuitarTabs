@@ -8,8 +8,16 @@ const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 const router = require('./routes/router');
 const port = 3000;
-
+//set path for obtaining files
 const path = require('path');
+app.use(express.static(path.join(__dirname, 'public'))),
+
+
+//set up templating engines using ejs-mate and ejs
+app.engine('ejs', engine);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 
 //mongoose and database connections
 mongoose.set('strictQuery', false);
@@ -30,27 +38,31 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7,
     }
 }
+
 const session = require('express-session')
-app.use(session(sessionConfig)); //creates session
-app.set('trust proxy', 1)
 const User = require('./models/users');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-app.use(passport.session());
+app.use(session(sessionConfig)); //creates session
 app.use(passport.initialize());
+app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));//use local strategy 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//set up templating engines using ejs-mate and ejs
-app.engine('ejs', engine);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+//flash
+const flash = require('connect-flash');
+app.use(flash());
+app.use((req,res,next) => { 
+    res.locals.currentUser = req.user; //checks for a user
+    res.locals.success = req.flash('success');//gives access to success flash key
+    res.locals.error = req.flash('error');
+    next();
+})
 
-//set path for obtaining files
-app.use(express.static(path.join(__dirname, 'public'))),
 
 
+//routes
 app.use('/', router);
 app.listen(port, () => {
     console.log('listening');

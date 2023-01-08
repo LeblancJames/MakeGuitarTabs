@@ -1,4 +1,10 @@
 <% layout('./layouts/boilerplate') -%>
+<% if (error && error.length) {%>
+    <span style="color:red; margin-left: 1rem;"><%= error %></span>
+<%}%> 
+<% if (success && success.length) {%>
+    <span style="color:blue; margin-left: 1rem;"><%= success %></span>
+<%}%> 
 
 <div class = "container mw-100 mx-0">
     <div class="row">

@@ -5,7 +5,8 @@ const removePreviousButton = document.querySelector('#remove-previous-button');
 const createEmptyColumnButton = document.querySelector('#create-empty-column-button');
 const createBarButton = document.querySelector('#create-bar-button');
 const newRowButton = document.querySelector('#new-row-button');
-
+const dropDownMenu = document.querySelector('.dropdown-menu');
+const container = document.querySelectorAll('.container');
 
 const tabContainer = document.querySelector('#tab-container')
 const fretboard = document.querySelector('.fretboard');
@@ -140,6 +141,16 @@ const app = {
                 });           
             }
         });
+        dropDownMenu.addEventListener('click', (event) => {
+            if (event.target.classList.contains('form-control')){
+                document.removeEventListener('keydown', keyDownEvents);
+            }
+        });
+        document.addEventListener('keydown', (event) =>{
+            if (event.key === 'Escape'){
+                document.addEventListener("keydown", keyDownEvents);
+            };
+        }); 
     },
 }
 
@@ -175,9 +186,10 @@ const deleteColumn = () => {
         tabRow.removeChild(tabRow.lastElementChild.previousElementSibling);
     } else if(tabContainer.childElementCount > 1){       
         tabContainer.removeChild(tabContainer.lastElementChild);     
-    } else {
-        alert('No notes left to remove');
-    }
+    } 
+    // else {
+    //     alert('No notes left to remove');
+    // }
     tabRow = document.querySelector('#tab-container').lastElementChild;
     emptyArea = document.querySelector('#tab-container').lastElementChild.lastElementChild; 
 }
