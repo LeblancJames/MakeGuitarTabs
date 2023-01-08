@@ -298,7 +298,7 @@ function keyDownEvents (event) {
 
     if(event.key == 'w' || event.key == 'W'){
         if (inputString === 0){
-            inputString = 5;
+            inputString = (fretboard.childElementCount-1);
         } else {
             inputString -= 1;
         }
@@ -306,10 +306,9 @@ function keyDownEvents (event) {
 
     }
     if(event.key == 's' || event.key == 'S'){
-        if (inputString === 5){
+        if (inputString === (fretboard.childElementCount-1)){
             inputString = 0;
         } else {
-            console.log(inputString)
             inputString ++;
         }
         colorInputString();

@@ -11,12 +11,43 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav px-2">
           <a class="nav-item nav-link active" href="/"><span class = "h4">Home</span></a>
-          <a class="nav-item nav-link" href="/my-tabs"><span class = "h4">My Tabs</span></a>
+          <a class="nav-item nav-link" href="/mytabs"><span class = "h4">My Tabs</span></a>
       </div>
     </div>
-      <div class="navbar-nav ml-auto px-4">
-        <a class="nav-item nav-link" href="/login"><span class = "h4">Login</span></a>
-        <a class="nav-item nav-link" href="/register"><span class = "h4">Register</span></a>
+      <div class="navbar-nav ml-auto px-5">
+        <div class="dropdown show">
+          <a class="nav-item nav-link px-3 mx-4 btn btn-white btn-outline-primary border border-5 dropdown-toggle" 
+             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+            <span class = "h4 text-secondary">Login</span>
+          </a>
+          
+          <div class="dropdown-menu" style="background-color: #D3D3D3; box-shadow: 1em 1em 1em black;">
+            <form class="px-4 py-3" style="width: 20em;">
+              <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Username or email</label>
+                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="Username or email">
+              </div>
+              <div class="form-group">
+                <label for="exampleDropdownFormPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                <label class="form-check-label" for="dropdownCheck">
+                  Remember me
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary">Sign in</button>
+            </form>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/forgot-password">Forgot password?</a>
+          </div>
+        </div>
+       
+        <a class="nav-item nav-link btn btn-white btn-outline-success border border-5" href="/register">
+          <span class = "h4">Register</span>
+        </a>
+        
       </div>   
   </nav>
 
