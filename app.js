@@ -60,6 +60,15 @@ app.use((req,res,next) => {
     next();
 })
 
+//validation
+// const Joi = require('joi');
+
+// const userSchema = Joi.object({
+//     user: Joi.object({
+//         firstname: Joi.string().required(),
+//         lastname: Joi.string().required(),
+//     })
+// })
 
 
 //routes
