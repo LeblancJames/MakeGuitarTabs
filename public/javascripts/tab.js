@@ -339,6 +339,19 @@ function printContent(el){
     let restorePage = document.body.innerHTML;
     let printContent = document.getElementById(el).innerHTML;
     document.body.innerHTML = printContent;
+    const rows = document.querySelectorAll('.tab-row');
+    //remove the tuning notes
+    for (let i = 0; i < rows.length; i++){
+        rows[i].firstElementChild.remove();
+        // rows[i].children[1].remove();
+    }
+    const tabSpans = document.querySelectorAll('.tabSpan');
+    for (let i = 0; i < tabSpans.length; i++) {
+        if(tabSpans[i].textContent === '-'){
+            tabSpans[i].style.width = '20px !important';
+            console.log(getComputedStyle(tabSpans[i]).width);
+        }
+    }
     window.print();
     document.body.innerHTML = restorePage; 
     tabContainer = document.querySelector('#tab-container')

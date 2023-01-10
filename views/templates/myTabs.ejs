@@ -1,1 +1,4 @@
 <% layout('./layouts/boilerplate') -%>
+<% if (success && success.length) {%>
+    <span style="color:blue; margin-left: 1rem;"><%= success %></span>
+<%}%> 

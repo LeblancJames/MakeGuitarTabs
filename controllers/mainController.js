@@ -162,6 +162,16 @@ module.exports.myTabs = (req, res) => {
     res.render('./templates/myTabs');
 }
 
+module.exports.saveTab = (req, res) => {
+    if(!req.isAuthenticated()){
+        req.flash('error', 'Please sign in to save your tab.')
+        res.redirect('/')
+    }
+    //save tab functionality
+    req.flash('success', 'Tab saved.')
+    res.redirect('/myTabs');
+}
+
 module.exports.verifyPage = (req, res) => {
     res.render('./templates/verify')
 }

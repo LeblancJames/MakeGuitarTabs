@@ -17,9 +17,11 @@
                     <div class="btn btn-white btn-outline-dark" id = "create-bar-button">Create New Bar</div>
                     <div class="btn btn-white btn-outline-dark mx-1" id="new-row-button">New Row</div>  
                 </div>
-                <div class = "d-inline">
+                <div class = "d-flex">
                     <button onclick = "printContent('tab-container')" class="btn btn-white btn-outline-dark mx-1">Export </button>
-                    <a href="#" class="btn btn-white btn-outline-dark">Save Tab</a>
+                    <form action="/saveTab" method = "POST" >
+                        <button type = "submit" class="btn btn-white btn-outline-dark">Save Tab</button>
+                    </form>
                 </div>
             </div>
             <div class="container">

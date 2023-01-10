@@ -22,6 +22,9 @@ router.route('/logout')
 router.route('/mytabs')
     .get(mainController.myTabs)
 
+router.route('/saveTab')
+    .post(mainController.saveTab)
+
 router.route('/forgotpassword')
     .get(mainController.renderforgotPassword)
     .post(mainController.forgotPassword)

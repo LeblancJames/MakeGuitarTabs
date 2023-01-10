@@ -9,6 +9,14 @@
     --noteDotOpacity: 0;
 }
 
+@media print{
+    .tab-row{
+        width: 100% !important;
+    }
+    .tabSpan{
+        width: 11px !important;
+    }
+}
 
 /*fretboad styles*/
 .fretboard {
