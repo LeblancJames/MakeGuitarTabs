@@ -27,5 +27,20 @@ router.route('/mytabs')
 router.route('/forgotpassword')
     .get(mainController.renderforgotPassword)
     .post(mainController.forgotPassword)
-    
+
+router.route('/resetpassword/:id/:token')
+    .get(mainController.renderResetPassword)
+    .post(mainController.resetPassword)
+
+router.route('/users/:id/verify/:token')
+    .get(mainController.verifyEmail)
+
+router.route('/verify')
+    .get(mainController.verifyPage)
+
+router.route('/error')
+    .get(mainController.errorPage)
+
+router.route('*')
+    .get(mainController.errorPage)
 module.exports = router;

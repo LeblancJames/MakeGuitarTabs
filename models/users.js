@@ -16,6 +16,10 @@ const UserSchema = new Schema ({
         required: true,
         unique: true,
     },
+    verified: {
+        type: Boolean,
+        default: false,
+    }
 });
 
 UserSchema.plugin(passportLocalMongoose); //creates username and password by passing in form to passportlocal plugin
