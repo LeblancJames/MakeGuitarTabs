@@ -1,15 +1,10 @@
 const widthOfWindow = window.innerWidth;
 
-const clearBoardButton = document.querySelector('#clear-board-button');
-const removePreviousButton = document.querySelector('#remove-previous-button');
-const createEmptyColumnButton = document.querySelector('#create-empty-column-button');
-const createBarButton = document.querySelector('#create-bar-button');
-const newRowButton = document.querySelector('#new-row-button');
-const dropDownMenu = document.querySelector('.dropdown-menu');
-const container = document.querySelectorAll('.container');
+let dropDownMenu = document.querySelector('.dropdown-menu');
+let container = document.querySelectorAll('.container');
 
-const tabContainer = document.querySelector('#tab-container')
-const fretboard = document.querySelector('.fretboard');
+let tabContainer = document.querySelector('#tab-container')
+let fretboard = document.querySelector('.fretboard');
 const selectedInstrumentSelector = document.querySelector('#instrument-selector');
 const notesFlat = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
 const notesSharp = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
@@ -31,6 +26,7 @@ let inputString = 0; //string that the fret note will be on
 
 const app = {
     init() {
+        fretboardFunction();
         this.setUpTab(emptyArea, tabRow);
         this.setUpEventListeners();
         this.deleteFirstrow(); //Bug creates two rows upon loading
@@ -62,6 +58,13 @@ const app = {
 
     },
     setUpEventListeners(){
+
+        let clearBoardButton = document.querySelector('#clear-board-button');
+        let removePreviousButton = document.querySelector('#remove-previous-button');
+        let createEmptyColumnButton = document.querySelector('#create-empty-column-button');
+        let createBarButton = document.querySelector('#create-bar-button');
+        let newRowButton = document.querySelector('#new-row-button');
+        fretboard = document.querySelector('.fretboard');
         selectedInstrumentSelector.addEventListener('change', () =>{
             clearBoard();
         });
@@ -329,3 +332,18 @@ function keyDownEvents (event) {
 };
 
 app.init();
+
+
+//export function
+function printContent(el){ 
+    let restorePage = document.body.innerHTML;
+    let printContent = document.getElementById(el).innerHTML;
+    document.body.innerHTML = printContent;
+    window.print();
+    document.body.innerHTML = restorePage; 
+    tabContainer = document.querySelector('#tab-container')
+    tabRow = document.querySelector('#tab-container').lastElementChild;
+    emptyArea = document.querySelector('#tab-container').lastElementChild.lastElementChild;
+    app.setUpEventListeners();
+    fretboardFunction();
+}

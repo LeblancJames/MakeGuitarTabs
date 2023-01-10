@@ -1,8 +1,8 @@
 //fretboard functionality 
-(function() {
+function fretboardFunction() {
 
     const root = document.documentElement;
-    const fretboard = document.querySelector('.fretboard');
+    let fretboard = document.querySelector('.fretboard');
     const fretboardNumbers = document.querySelector('.fretboard-numbers')
     const notesFlat = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
     const notesSharp = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
@@ -10,7 +10,7 @@
     //variables for changing instrument notes on fretboard
     const selectedInstrumentSelector = document.querySelector('#instrument-selector');
     let selectedInstrument = 'Guitar';
-    const instrumentTuningPresets = {
+    let instrumentTuningPresets = {
         'Guitar': [4, 11, 7, 2, 9, 4],
         'Bass (4 string)': [7, 2, 9, 4],
         'Bass (5 string)': [7, 2, 9, 4, 11],
@@ -47,6 +47,9 @@
         },
         //creates dropdown menu for selecting instrument
         setUpInstrumentSelector(){
+            for (i = (selectedInstrumentSelector.length); i > 0; i --){
+                selectedInstrumentSelector.remove(i);
+            }
             for(instrument in instrumentTuningPresets){
                 let instrumentOption = tools.createElement('option', instrument);
                 selectedInstrumentSelector.appendChild(instrumentOption);
@@ -54,6 +57,9 @@
         },
         //create dropdown menu for accidentals
         setUpAccidentalSelector(){
+            for (i = (selectedAccidental.length); i > 0; i --){
+                selectedAccidental.remove(i);
+            }
             for(accidental of accidentalsList){
                 let accidentalOption = tools.createElement('option', accidental);
                 selectedAccidental.appendChild(accidentalOption);
@@ -61,12 +67,16 @@
         },
         //create dropdown menu for number of frets
         setUpFretNumberSelector(){
+            for (i = (selectedFretNumber.length); i > 0; i --){
+                selectedFretNumber.remove(i);
+            }
             for(fretNumber of fretNumberList){
                 let fretNumberOption = tools.createElement('option', fretNumber);
                 selectedFretNumber.appendChild(fretNumberOption);
             }
         },
         setUpFretboard(){
+            fretboard = document.querySelector('.fretboard');
             fretboard.innerHTML = ''; //resets board amount 
             fretboardNumbers.innerHTML = ''; //resets number span
             root.style.setProperty('--number-of-strings', numberOfStrings);
@@ -196,4 +206,6 @@
     }
     
     app.init();
-})();
+};
+
+

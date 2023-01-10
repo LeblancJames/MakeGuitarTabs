@@ -9,8 +9,6 @@ const passport = require('passport');
 router.route('/')
     .get(mainController.home)
 
-
-
 router.route('/register')
     .get(mainController.renderRegister)
     .post(mainController.register)
