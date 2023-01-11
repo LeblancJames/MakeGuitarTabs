@@ -2,3 +2,18 @@
 <% if (success && success.length) {%>
     <span style="color:blue; margin-left: 1rem;"><%= success %></span>
 <%}%> 
+<% if (error && error.length) {%>
+    <span style="color:red; margin-left: 1rem;"><%= error %></span>
+<%}%> 
+<p>Due to cloud costs, we currently only allow one tab per user.</p>
+
+<div>
+    <div>
+        <form action="/deletetab" method="POST" class="d-flex">
+            <input type="hidden" name="userId" value="<%=userId%>">
+            <button class="btn btn-white btn-outline-dark mx-1 mb-3">Delete Tab</button>
+        </form>
+        <div><%-tab%></div>
+    </div>
+
+</div>

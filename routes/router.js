@@ -5,7 +5,6 @@ const mainController = require('../controllers/mainController');
 //const User = require('/models/users');
 const passport = require('passport');
 
-
 router.route('/')
     .get(mainController.home)
 
@@ -24,6 +23,9 @@ router.route('/mytabs')
 
 router.route('/saveTab')
     .post(mainController.saveTab)
+
+router.route('/deleteTab')
+    .post(mainController.deleteTab)
 
 router.route('/forgotpassword')
     .get(mainController.renderforgotPassword)

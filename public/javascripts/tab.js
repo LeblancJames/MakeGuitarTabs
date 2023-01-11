@@ -29,8 +29,8 @@ const app = {
         fretboardFunction();
         this.setUpTab(emptyArea, tabRow);
         this.setUpEventListeners();
-        this.deleteFirstrow(); //Bug creates two rows upon loading
-
+     
+        
     },
     //bug fix
     deleteFirstrow(){

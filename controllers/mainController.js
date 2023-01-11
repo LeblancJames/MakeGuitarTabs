@@ -3,6 +3,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 const passport = require('passport');
+
+
 const jwt = require('jsonwebtoken');
 const User = require('../models/users');
 const Token = require('../models/token');
@@ -20,8 +22,12 @@ const payload = {
     
 
 module.exports.home = (req, res) => {
-    res.render('./templates/home');
-;}
+    if(req.isAuthenticated()){
+        res.render('./templates/home', {userId: req.user._id});
+    } else{
+        res.render('./templates/home', {userId: null});
+    };
+}
 
 module.exports.renderRegister = (req, res) => {
     res.render('./templates/register');
@@ -118,12 +124,12 @@ module.exports.forgotPassword = async (req, res) => {
     res.redirect('/forgotpassword');
     }catch(err){
         req.flash('success', 'Please check your email for instructions on how to reset your password.')
-        res.redirect('/forgotpassword');
     }
 }
 
 module.exports.renderResetPassword = async (req, res) => {
     const {id, token} = req.params;
+res.redirect('/forgotpassword');
    
     try {
         const user = await User.findOne({_id: id});
@@ -135,7 +141,7 @@ module.exports.renderResetPassword = async (req, res) => {
     }
 }
 
-//post request
+//post request for password reset
 module.exports.resetPassword = async (req, res) => {
     const {id, token} = req.params;
     const {password} = req.body;
@@ -159,17 +165,68 @@ module.exports.myTabs = (req, res) => {
         req.flash('error', 'Please sign in to view your tabs.')
         return res.redirect('/')
     } 
-    res.render('./templates/myTabs');
+    let userId = req.user._id; 
+    User.findById(userId, (err, user) => {
+        if(err){
+            res.redirect('/error');
+        }else{
+            if(user.tabs){
+                let tabstring = JSON.stringify(user.tabs);//allow object to be passed to ejs
+                let tab=JSON.parse(tabstring)
+                res.render('./templates/myTabs', {userId: userId, tab: tab}); //pass userId and userTabs to ejs file
+            } else{
+                res.render('./templates/myTabs', {userId: null, tab: null});
+            }
+        }
+    })
 }
 
+//save tab button
 module.exports.saveTab = (req, res) => {
     if(!req.isAuthenticated()){
-        req.flash('error', 'Please sign in to save your tab.')
-        res.redirect('/')
+        req.flash('error', 'Please sign in to save your tab.');
+        return res.redirect('/');
+    } else if (req.isAuthenticated()) { 
+        let userId = req.body.userId;
+        let tabs = req.body.tabs;
+        //find user using userId and update tab if one doesnt exist already
+        User.findOneAndUpdate({ _id: userId, tabs: {$exists: false} }, 
+            { $set: { tabs: tabs } },
+            { new: true },
+            (err, doc) => {
+            if(err) {
+              console.log("Error updating tabs: ", err);
+              req.flash('error', 'Something went wrong.')
+              return res.redirect('/mytabs')
+            } else if(!doc) {
+                req.flash('error', 'You have already saved a tab.')
+                return res.redirect('/mytabs')
+            }else {
+              console.log("Tabs updated: ", doc);
+              req.flash('success', 'Saved tab successfully.')
+              return res.redirect('/mytabs')
+            }
+          });
+        
     }
-    //save tab functionality
-    req.flash('success', 'Tab saved.')
-    res.redirect('/myTabs');
+    
+}
+
+module.exports.deleteTab = (req, res) => {
+    let userId = req.body.userId;
+    User.updateOne({_id: userId}, {$unset: {tabs: ""}}, function(err,result)
+    {
+        if (err) {
+            req.flash('error', 'Something went wrong.');
+            res.redirect('/myTabs')
+        }else if (result.nModified === 0){
+            req.flash('error', 'Something went wrong.');
+            res.redirect('/myTabs')
+        }else{
+            req.flash('success', 'Tab deleted successfully.');
+            res.redirect('/myTabs')
+        }
+    });
 }
 
 module.exports.verifyPage = (req, res) => {
