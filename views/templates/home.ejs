@@ -28,9 +28,16 @@
                 <div class="mb-3">
                     <%- include ('../partials/fretboard.ejs') %> 
                 </div>
+                <!--tab area-->
                 <div class = "border-top border-3">
                     <h2 class = "mt-3">Tab Maker</h2>
-                    <%- include ('../partials/tab.ejs') %> 
+                    <div class = 'min-vh-100' id = "tab-container">
+                        <%-tab%>
+                        <div class = 'tab-row d-flex'>
+                            <div class="empty-area">
+                            </div>
+                        </div>
+                    </div>                    
                 </div>
             </div>
         </div>

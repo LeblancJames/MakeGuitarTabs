@@ -32,11 +32,7 @@ const app = {
      
         
     },
-    //bug fix
-    deleteFirstrow(){
-        tabContainer.removeChild(tabContainer.firstElementChild);     
-    },
-    
+
     setUpTab(emptyArea, tabRow){
         numStrings = fretboard.childElementCount;
         newColumn = tools.createElement('div');
@@ -360,3 +356,4 @@ function printContent(el){
     app.setUpEventListeners();
     fretboardFunction();
 }
+

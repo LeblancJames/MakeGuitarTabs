@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.json({limit: '100mb'}));
+app.use(express.urlencoded({extended:true, limit: '100mb'}));
 const engine = require('ejs-mate');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');

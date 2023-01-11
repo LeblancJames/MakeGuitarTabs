@@ -23,9 +23,23 @@ const payload = {
 
 module.exports.home = (req, res) => {
     if(req.isAuthenticated()){
-        res.render('./templates/home', {userId: req.user._id});
+        //get user tab 
+        let userId = req.user._id; 
+        User.findById(userId, (err, user) => {
+        if(err){
+            res.redirect('/error');
+        }else{
+            if(user.tabs){
+                let tabstring = JSON.stringify(user.tabs);//allow object to be passed to ejs
+                let tab=JSON.parse(tabstring)
+                res.render('./templates/home', {userId: userId, tab: tab}); //pass userId and userTabs to ejs file
+            } else{
+                res.render('./templates/home', {userId: null, tab: null});
+            }
+        }
+    })
     } else{
-        res.render('./templates/home', {userId: null});
+        res.render('./templates/home', {userId: null, tab: null});
     };
 }
 
@@ -190,7 +204,7 @@ module.exports.saveTab = (req, res) => {
         let userId = req.body.userId;
         let tabs = req.body.tabs;
         //find user using userId and update tab if one doesnt exist already
-        User.findOneAndUpdate({ _id: userId, tabs: {$exists: false} }, 
+        User.findOneAndUpdate({ _id: userId}, 
             { $set: { tabs: tabs } },
             { new: true },
             (err, doc) => {
@@ -198,10 +212,7 @@ module.exports.saveTab = (req, res) => {
               console.log("Error updating tabs: ", err);
               req.flash('error', 'Something went wrong.')
               return res.redirect('/mytabs')
-            } else if(!doc) {
-                req.flash('error', 'You have already saved a tab.')
-                return res.redirect('/mytabs')
-            }else {
+            } else {
               console.log("Tabs updated: ", doc);
               req.flash('success', 'Saved tab successfully.')
               return res.redirect('/mytabs')
@@ -225,6 +236,21 @@ module.exports.deleteTab = (req, res) => {
         }else{
             req.flash('success', 'Tab deleted successfully.');
             res.redirect('/myTabs')
+        }
+    });
+}
+//redirect from my tabs to home page to edit tab
+module.exports.editTab = (req, res) =>{
+    let userId = req.body.userId;
+    //access tabs of user id
+    User.findOne({ _id: userId }, (err, user) => {
+        if (err) {
+            res.redirect('/error')
+        }
+        if (user) {
+            res.redirect('/');
+        } else {
+            res.redirect('/error')
         }
     });
 }

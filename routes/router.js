@@ -26,6 +26,9 @@ router.route('/saveTab')
 
 router.route('/deleteTab')
     .post(mainController.deleteTab)
+    
+router.route('/editTab')
+    .post(mainController.editTab)
 
 router.route('/forgotpassword')
     .get(mainController.renderforgotPassword)

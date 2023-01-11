@@ -5,15 +5,18 @@
 <% if (error && error.length) {%>
     <span style="color:red; margin-left: 1rem;"><%= error %></span>
 <%}%> 
-<p>Due to cloud costs, we currently only allow one tab per user.</p>
+<p>*Note: Due to cloud costs, we currently only allow one tab per user.</p>
 
 <div>
-    <div>
+    <div class="d-inline-flex">
         <form action="/deletetab" method="POST" class="d-flex">
             <input type="hidden" name="userId" value="<%=userId%>">
             <button class="btn btn-white btn-outline-dark mx-1 mb-3">Delete Tab</button>
         </form>
-        <div><%-tab%></div>
+        <form action="/edittab" method="POST" class="d-flex">
+            <input type="hidden" name="userId" value="<%=userId%>">
+            <button onclick="editTab('<%= userId %>')" class="btn btn-white btn-outline-dark mx-1 mb-3">Edit Tab</button>
+        </form>
     </div>
-
+    <div><%-tab%></div>
 </div>
