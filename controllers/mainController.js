@@ -107,6 +107,7 @@ module.exports.login = async (req, res) => {
         }
         return res.redirect('/verify') 
     }
+    
     req.flash('success', 'Login successful')
     res.redirect('/');
 }

@@ -60,16 +60,8 @@ app.use((req,res,next) => {
     next();
 })
 
-//validation
-// const Joi = require('joi');
-
-// const userSchema = Joi.object({
-//     user: Joi.object({
-//         firstname: Joi.string().required(),
-//         lastname: Joi.string().required(),
-//     })
-// })
-
+const mongoSanitize = require('express-mongo-sanitize')
+app.use(mongoSanitize());
 
 //routes
 app.use('/', router);
