@@ -34,7 +34,7 @@ module.exports.home = (req, res) => {
                 let tab=JSON.parse(tabstring)
                 res.render('./templates/home', {userId: userId, tab: tab}); //pass userId and userTabs to ejs file
             } else{
-                res.render('./templates/home', {userId: null, tab: null});
+                res.render('./templates/home', {userId: userId, tab: null});
             }
         }
     })
@@ -201,6 +201,7 @@ module.exports.saveTab = (req, res) => {
         req.flash('error', 'Please sign in to save your tab.');
         return res.redirect('/');
     } else if (req.isAuthenticated()) { 
+        console.log(req.body);
         let userId = req.body.userId;
         let tabs = req.body.tabs;
         //find user using userId and update tab if one doesnt exist already

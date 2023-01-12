@@ -20,7 +20,7 @@
                 <div class = "d-flex">
                     <button onclick = "printContent('tab-container')" class="btn btn-white btn-outline-dark mx-1">Export </button>
                     <form action="/saveTab" method = "POST">
-                            <button onclick="saveTab('tab-container', '<%= userId %>')" class="btn btn-white btn-outline-dark">Save Tab</button>
+                            <button onclick="saveTab('tab-container', '<%=userId%>')" class="btn btn-white btn-outline-dark">Save Tab</button>
                     </form>
                 </div>
             </div>
@@ -28,7 +28,6 @@
                 <div class="mb-3">
                     <%- include ('../partials/fretboard.ejs') %> 
                 </div>
-                <!--tab area-->
                 <div class = "border-top border-3">
                     <h2 class = "mt-3">Tab Maker</h2>
                     <div class = 'min-vh-100' id = "tab-container">

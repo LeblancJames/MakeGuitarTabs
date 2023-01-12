@@ -7,7 +7,7 @@ function saveTab(el, userId){
         
         fetch('/saveTab', {   
             method: 'POST',
-            body: JSON.stringify({ userId: userId, tabs: innerHTMLTabContainer }),
+            body: JSON.stringify({ userId: userId, tabs: innerHTMLTabContainer}),
             headers: { 'Content-Type': 'application/json' },
         })
         .then(response => response.json())
@@ -21,4 +21,3 @@ function saveTab(el, userId){
     }
   
 }
-
