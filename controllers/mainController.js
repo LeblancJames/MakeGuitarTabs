@@ -20,12 +20,11 @@ const payload = {
     email: User.email,
     id: User._id,
 };
-    
 
 module.exports.home = (req, res) => {
     if(req.isAuthenticated()){
         //get user tab 
-        let userId = req.user._id; 
+        let userId = req.user._id;
         User.findById(userId, (err, user) => {
         if(err){
             res.redirect('/error');
@@ -59,7 +58,21 @@ module.exports.register = (async (req, res) => {
             token: crypto.randomBytes(32).toString('hex')
         }).save();
         const url = `http://localhost:3000/users/${user._id}/verify/${token.token}`  //link to send in email
-        await sendEmail(user.email, 'Verify Email', url);
+        await sendEmail(user.email, 'Verify Your Email for MakeGuitarTabs!',
+        `<html>
+        <head>
+            <title>Verify Email for MakeGuitarTabs!</title>
+        </head>
+            <body>
+                <h1>Welcome to MakeGuitarTabs!</h1>
+                <p>Thanks for signing up, ${user.firstname}!</p>
+                <p>Please click on the following link to verify your account:</p>
+                <a href=${url}>Verify Email</a>
+                <p>If you have any questions or concerns, feel free to contact us at makeguitartabs@gmail.com.</p>
+                <p>Best Regards,</p>
+                <p>The MakeGuitarTabs Team</p>
+            </body>
+        </html>`);
 
         res.redirect('/verify')//not template, link
           
@@ -103,7 +116,21 @@ module.exports.login = async (req, res) => {
                 token: crypto.randomBytes(32).toString('hex')
             }).save();
             const url = `$(process.env.BASE_URL)/users/${user._id}/verify/${token.token}`
-            await sendEmail(user.email, 'Verify Email', url);
+            await sendEmail(user.email, 'Verify Your Email for MakeGuitarTabs!',
+                `<html>
+                <head>
+                    <title>Verify Email for MakeGuitarTabs!</title>
+                </head>
+                    <body>
+                        <h1>Welcome to MakeGuitarTabs!</h1>
+                        <p>Thanks for signing up, ${user.firstname}!</p>
+                        <p>Please click on the following link to verify your account:</p>
+                        <a href=${url}>Verify Email</a>
+                        <p>If you have any questions or concerns, feel free to contact us at makeguitartabs@gmail.com.</p>
+                        <p>Best Regards,</p>
+                        <p>The MakeGuitarTabs Team</p>
+                    </body>
+                </html>`);
         }
         return res.redirect('/verify') 
     }

@@ -23,7 +23,6 @@ let numStrings;
 
 let inputString = 0; //string that the fret note will be on
 
-
 const app = {
     init() {
         fretboardFunction();
@@ -54,7 +53,9 @@ const app = {
 
     },
     setUpEventListeners(){
-
+        document.querySelector("#print-content-button").addEventListener('click', () =>{
+            printContent('tab-container');
+        })
         let clearBoardButton = document.querySelector('#clear-board-button');
         let removePreviousButton = document.querySelector('#remove-previous-button');
         let createEmptyColumnButton = document.querySelector('#create-empty-column-button');
@@ -186,9 +187,6 @@ const deleteColumn = () => {
     } else if(tabContainer.childElementCount > 1){       
         tabContainer.removeChild(tabContainer.lastElementChild);     
     } 
-    // else {
-    //     alert('No notes left to remove');
-    // }
     tabRow = document.querySelector('#tab-container').lastElementChild;
     emptyArea = document.querySelector('#tab-container').lastElementChild.lastElementChild; 
 }
@@ -332,6 +330,7 @@ app.init();
 
 //export function
 function printContent(el){ 
+
     let restorePage = document.body.innerHTML;
     let printContent = document.getElementById(el).innerHTML;
     document.body.innerHTML = printContent;
@@ -349,5 +348,6 @@ function printContent(el){
     emptyArea = document.querySelector('#tab-container').lastElementChild.lastElementChild;
     app.setUpEventListeners();
     fretboardFunction();
+
 }
 

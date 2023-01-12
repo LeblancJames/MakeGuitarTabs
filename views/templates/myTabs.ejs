@@ -1,9 +1,9 @@
 <% layout('./layouts/boilerplate') -%>
 <% if (success && success.length) {%>
-    <span style="color:blue; margin-left: 1rem;"><%= success %></span>
+    <span id="mytab-alert-error"><%= success %></span>
 <%}%> 
 <% if (error && error.length) {%>
-    <span style="color:red; margin-left: 1rem;"><%= error %></span>
+    <span id="mytab-alert-success"><%= error %></span>
 <%}%> 
 <p>*Note: Due to cloud costs, we currently only allow one tab per user.</p>
 

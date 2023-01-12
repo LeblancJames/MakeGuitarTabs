@@ -2,7 +2,6 @@
 // if (process.env.NODE_ENV !== "production"){
 //     require('dotenv').config();
 // }
-
 const express = require('express');
 const app = express();
 app.use(express.json({limit: '100mb'}));
@@ -66,8 +65,31 @@ app.use((req,res,next) => {
     next();
 })
 
+
 const mongoSanitize = require('express-mongo-sanitize')
 app.use(mongoSanitize());
+const helmet = require('helmet');
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            "script-src": [
+                "'self'",
+                "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js",
+                ],
+            "script-src-elem": [
+                "'self'",
+                "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+                ],
+            "script-src-attr": [
+                "'self'",
+                ],
+            "style-src": [
+                "'self'",
+                "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"],
+        },
+    }) 
+);
+
 
 //routes
 app.use('/', router);

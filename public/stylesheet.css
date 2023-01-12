@@ -160,6 +160,72 @@ span[contenteditable] {
     width: 27em;
 }
 
+#dropdown-menu-header{
+    background-color: #D3D3D3; 
+    box-shadow: 1em 1em 1em black;
+}
+
+#login-form-header{
+    width: 20em;
+}
+
+#forgotpassword-container{
+    margin-top: 10em;
+}
+
+#forgotpassword-success-style{
+    color:red;
+    margin-left: 1rem;
+}
+
+#forgotpassword-body{
+    background: lightslategrey;
+}
+
+#home-alert-error{
+    color:red;
+    margin-left: 1rem;
+}
+
+
+#home-alert-success{
+    color:blue;
+    margin-left: 1rem;
+}
+
+#mytab-alert-error{
+    color:red;
+    margin-left: 1rem;
+}
+
+#mytab-alert-success{
+    color:blue;
+    margin-left: 1rem;
+}
+
+#register-error{
+    color:red;
+}
+
+#register-body{
+    background: url('/images/login.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#resetpassword-body{
+    background: lightslategrey;
+}
+
+#resetpassword-container{
+    margin-top: 10em;
+}
+
+#verifyaccount-image{
+    height: 1em;
+    width: 1em;
+}
+
 @media (max-width: 1430px){
     .variableIsMoreThan15 {
         display: none;
@@ -171,3 +237,4 @@ span[contenteditable] {
         display: none;
     }
 }
+

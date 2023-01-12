@@ -1,11 +1,14 @@
 <% layout('./layouts/boilerplate') -%>
+<body id ="register-body">
+    
+
 <div class="container d-flex justify-content-center align-items-center mt-5">
     <div class="card shadow">
         <div class="card-body">
             <div class="">
                 <h2 class="card-title text-dark">Sign Up</h2>
                 <h6 class="card-text text-muted">It's quick and easy.</h6>
-                <h6 style="color:red"><%= error %></h6>
+                <h6 id = "register-error"><%= error %></h6>
                 <h1 class="border bottom mb-4"></h1>
             </div>
             <div>
@@ -34,13 +37,4 @@
         </div>
     </div>
 </div>
-
-
-<style>
-    body {
-        background: url('/images/login.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-    }
-</style>
-
+</body>
