@@ -341,13 +341,7 @@ function printContent(el){
         rows[i].firstElementChild.remove();
         // rows[i].children[1].remove();
     }
-    const tabSpans = document.querySelectorAll('.tabSpan');
-    for (let i = 0; i < tabSpans.length; i++) {
-        if(tabSpans[i].textContent === '-'){
-            tabSpans[i].style.width = '20px !important';
-            console.log(getComputedStyle(tabSpans[i]).width);
-        }
-    }
+
     window.print();
     document.body.innerHTML = restorePage; 
     tabContainer = document.querySelector('#tab-container')

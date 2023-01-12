@@ -14,11 +14,14 @@
         width: 100% !important;
     }
     .tabSpan{
-        width: 11px !important;
+        width: 0.5rem !important;
     }
+    @page { margin: 0; }
+    body { margin: 1.6cm; }
 }
 
-/*fretboad styles*/
+
+/*fretboard styles*/
 .fretboard {
     display: flex;
     flex-direction: column;
@@ -155,4 +158,16 @@ span[contenteditable] {
 
 .card-body{
     width: 27em;
+}
+
+@media (max-width: 1500px){
+    .variableIsMoreThan15 {
+        display: none;
+    }
+}
+
+@media (max-width: 1050px){
+    .variableIsLessThan15 {
+        display: none;
+    }
 }

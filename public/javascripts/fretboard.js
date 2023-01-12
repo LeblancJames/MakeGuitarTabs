@@ -1,6 +1,5 @@
 //fretboard functionality 
 function fretboardFunction() {
-
     const root = document.documentElement;
     let fretboard = document.querySelector('.fretboard');
     const fretboardNumbers = document.querySelector('.fretboard-numbers')
@@ -34,8 +33,6 @@ function fretboardFunction() {
     //show notes switches
     const showAllNotesSwitch = document.querySelector('#show-all-notes');
     const showSameNotesSwitch = document.querySelector('#show-same-notes');
-    
-
     
     const app = {
         init()  {
@@ -80,6 +77,11 @@ function fretboardFunction() {
             fretboard.innerHTML = ''; //resets board amount 
             fretboardNumbers.innerHTML = ''; //resets number span
             root.style.setProperty('--number-of-strings', numberOfStrings);
+            if(numberOfFrets > 16){
+                fretboard.classList.add('variableIsMoreThan15');
+            }else{
+                fretboard.classList.add('variableIsLessThan15')
+            }
             //add strings
             for (let i = 0; i < numberOfStrings; i++){
                 let string = tools.createElement('div');

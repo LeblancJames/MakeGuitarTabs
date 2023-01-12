@@ -207,14 +207,11 @@ module.exports.saveTab = (req, res) => {
             { new: true },
             (err, doc) => {
             if(err) {
-              console.log("Error updating tabs: ", err);
               req.flash('error', 'Something went wrong.')
             } else {
-              console.log("Tabs updated: ", doc);
               req.flash('success', 'Saved tab successfully.')
             }
           });
-        console.log('a')
         res.redirect('/mytabs')
     }
 }
