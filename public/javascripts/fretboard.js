@@ -78,8 +78,10 @@ function fretboardFunction() {
             fretboardNumbers.innerHTML = ''; //resets number span
             root.style.setProperty('--number-of-strings', numberOfStrings);
             if(numberOfFrets > 16){
+                fretboard.classList.remove('variableIsLessThan15')
                 fretboard.classList.add('variableIsMoreThan15');
             }else{
+                fretboard.classList.remove('variableIsMoreThan15')
                 fretboard.classList.add('variableIsLessThan15')
             }
             //add strings

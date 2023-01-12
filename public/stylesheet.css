@@ -160,7 +160,7 @@ span[contenteditable] {
     width: 27em;
 }
 
-@media (max-width: 1500px){
+@media (max-width: 1430px){
     .variableIsMoreThan15 {
         display: none;
     }
