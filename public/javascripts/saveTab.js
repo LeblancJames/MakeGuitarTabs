@@ -1,10 +1,20 @@
+let saveTabButton = document.getElementById("save-tab-button");
+
+saveTabButton.addEventListener("click", () => {
+    saveTab("tab-container", userId);
+  });
+
 function saveTab(el, userId){
+    let saveTabContainer = document.getElementById(el);  //get tab container 
+    let innerHTMLTabContainer = saveTabContainer.innerHTML; //get contents of tab container
     if(userId.length === 0){
-        return;
+        document.querySelector("#please-login-alert").classList.remove('d-none');
+        setTimeout(function(){
+            document.querySelector("#please-login-alert").classList.add('d-none');
+          }, 2000);
+        clearTimeout(timeoutId)
+
     } else {
-        let saveTabContainer = document.getElementById(el);  //get tab container 
-        let innerHTMLTabContainer = saveTabContainer.innerHTML; //get contents of tab container
-        
         fetch('/saveTab', {   
             method: 'POST',
             body: JSON.stringify({ userId: userId, tabs: innerHTMLTabContainer}),
@@ -17,7 +27,10 @@ function saveTab(el, userId){
         .catch((error) => {
             console.error('Error:', error);
         });
-    
-    }
+        document.querySelector("#successful-save-alert").classList.remove('d-none');
+        setTimeout(function(){
+            document.querySelector("#successful-save-alert").classList.add('d-none');
+          }, 2000);
+        clearTimeout(timeoutId)    }
   
 }

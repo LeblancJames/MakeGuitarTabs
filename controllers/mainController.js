@@ -13,6 +13,7 @@ const crypto = require('crypto');
 const dotenv = require('dotenv');
 dotenv.config();
 
+
 //used for forgot password
 const JWT_SECRET = 'secret';
 const payload = {
@@ -197,11 +198,7 @@ module.exports.myTabs = (req, res) => {
 
 //save tab button
 module.exports.saveTab = (req, res) => {
-    if(!req.isAuthenticated()){
-        req.flash('error', 'Please sign in to save your tab.');
-        return res.redirect('/');
-    } else if (req.isAuthenticated()) { 
-        console.log(req.body);
+    if(req.isAuthenticated()) { 
         let userId = req.body.userId;
         let tabs = req.body.tabs;
         //find user using userId and update tab if one doesnt exist already
@@ -212,16 +209,14 @@ module.exports.saveTab = (req, res) => {
             if(err) {
               console.log("Error updating tabs: ", err);
               req.flash('error', 'Something went wrong.')
-              return res.redirect('/mytabs')
             } else {
               console.log("Tabs updated: ", doc);
               req.flash('success', 'Saved tab successfully.')
-              return res.redirect('/mytabs')
             }
           });
-        
+        console.log('a')
+        res.redirect('/mytabs')
     }
-    
 }
 
 module.exports.deleteTab = (req, res) => {
@@ -250,8 +245,6 @@ module.exports.editTab = (req, res) =>{
         }
         if (user) {
             res.redirect('/');
-        } else {
-            res.redirect('/error')
         }
     });
 }
