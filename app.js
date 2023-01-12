@@ -1,3 +1,8 @@
+
+// if (process.env.NODE_ENV !== "production"){
+//     require('dotenv').config();
+// }
+
 const express = require('express');
 const app = express();
 app.use(express.json({limit: '100mb'}));
@@ -27,6 +32,7 @@ db.on('error', console.error.bind(console, 'connection error'));
 
 //sessions and authentication
 const sessionConfig = {
+    name: '_giwm',
     //store,
     secret: 'mysecretisthis',
     resave: false,
