@@ -23,7 +23,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
+
 //mongoose and database connections
+const dbUrl = process.env.DB_URL;
+// mongoose.connect(dbUrl);
 mongoose.set('strictQuery', false);
 mongoose.connect('mongodb://127.0.0.1:27017');
 const db = mongoose.connection;
