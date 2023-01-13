@@ -26,16 +26,29 @@ app.set('view engine', 'ejs');
 
 //mongoose and database connections
 const dbUrl = process.env.DB_URL;
+const dataurl = 'mongodb://127.0.0.1:27017';
 // mongoose.connect(dbUrl);
 mongoose.set('strictQuery', false);
-mongoose.connect('mongodb://127.0.0.1:27017');
+mongoose.connect(dataurl);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
 
 //sessions and authentication
+const session = require('express-session')
+const MongoStore = require('connect-mongo');
+
+let store = new MongoStore({
+    mongoUrl: dataurl,
+    collection: "sessions",
+    secret: 'asecret',
+    touchAfter: 24 * 3600, 
+
+ });
+
 const sessionConfig = {
+    store: store,
     name: '_giwm',
-    //store,
+    store,
     secret: 'mysecretisthis',
     resave: false,
     saveUninitialized: true,
@@ -47,7 +60,6 @@ const sessionConfig = {
     }
 }
 
-const session = require('express-session')
 const User = require('./models/users');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
@@ -57,7 +69,6 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));//use local strategy 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
 //flash
 const flash = require('connect-flash');
 app.use(flash());
