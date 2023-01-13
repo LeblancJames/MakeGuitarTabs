@@ -1,7 +1,7 @@
 
-// if (process.env.NODE_ENV !== "production"){
-//     require('dotenv').config();
-// }
+if (process.env.NODE_ENV !== "production"){
+    require('dotenv').config();
+}
 const express = require('express');
 const app = express();
 app.use(express.json({limit: '100mb'}));
@@ -25,11 +25,10 @@ app.set('view engine', 'ejs');
 
 
 //mongoose and database connections
-const dbUrl = process.env.DB_URL;
-const dataurl = 'mongodb://127.0.0.1:27017';
-// mongoose.connect(dbUrl);
+const secret = process.env.SECRET || 'makeguitartabsstorageinfo'
+const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017';
 mongoose.set('strictQuery', false);
-mongoose.connect(dataurl);
+mongoose.connect(dbUrl);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
 
@@ -38,9 +37,9 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo');
 
 let store = new MongoStore({
-    mongoUrl: dataurl,
+    mongoUrl: dbUrl,
     collection: "sessions",
-    secret: 'asecret',
+    secret,
     touchAfter: 24 * 3600, 
 
  });
@@ -49,7 +48,7 @@ const sessionConfig = {
     store: store,
     name: '_giwm',
     store,
-    secret: 'mysecretisthis',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {

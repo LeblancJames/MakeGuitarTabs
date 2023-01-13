@@ -4,17 +4,17 @@ const nodemailer = require('nodemailer');
 module.exports = async (email, subject, text) => {
     try{
         const transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            service: 'gmail',
-            port: 587,
+            host: process.env.HOST,
+            service: process.env.SERVICE,
+            port: process.env.PORT,
             secure: true,
             auth:{
-                user: 'makeguitartabs@gmail.com',
-                pass: 'qsvlssduadasxqew',
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASSWORD,
             }
         });
         await transporter.sendMail({
-            from: process.env.USER,
+            from: process.env.EMAIL_USER,
             to: email,
             subject: subject,
             html: text,

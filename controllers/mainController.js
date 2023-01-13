@@ -15,7 +15,7 @@ dotenv.config();
 
 
 //used for forgot password
-const JWT_SECRET = 'secret';
+const JWT_SECRET = process.env.SECRET;
 const payload = {
     email: User.email,
     id: User._id,
@@ -57,7 +57,7 @@ module.exports.register = (async (req, res) => {
             userID: user._id,
             token: crypto.randomBytes(32).toString('hex')
         }).save();
-        const url = `http://localhost:3000/users/${user._id}/verify/${token.token}`  //link to send in email
+        const url = `${process.env.BASE_URL}/users/${user._id}/verify/${token.token}`  //link to send in email
         await sendEmail(user.email, 'Verify Your Email for MakeGuitarTabs!',
         `<html>
         <head>
@@ -161,7 +161,7 @@ module.exports.forgotPassword = async (req, res) => {
     
     const secret = JWT_SECRET + user.password;
     const token = jwt.sign(payload, secret, {expiresIn: '15m'});
-    const link = `http://localhost:3000/resetpassword/${user._id}/${token}`;
+    const link = `${process.env.BASE_URL}/resetpassword/${user._id}/${token}`;
     await sendEmail(user.email, 'Reset Password', link);
     req.flash('success', 'Please check your email for instructions on how to reset your password.')
     res.redirect('/forgotpassword');
@@ -233,7 +233,7 @@ module.exports.saveTab = (req, res) => {
         User.findOneAndUpdate({ _id: userId}, 
             { $set: { tabs: tabs } },
             { new: true },
-            (err, doc) => {
+            (err) => {
             if(err) {
               req.flash('error', 'Something went wrong.')
             } else {
