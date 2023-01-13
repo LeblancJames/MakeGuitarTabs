@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 const router = require('./routes/router');
-const port = 3000;
+const port = process.env.PORT || 3000;
 //set path for obtaining files
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'public'))),
